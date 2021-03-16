@@ -6,8 +6,8 @@ class Player extends SpaceShip {
         x = width/gridsize/2;
         y = height - (10 * pixelsize);
         sprite    = new String[5];
-        sprite[0] = "0010100";
-        sprite[1] = "0110110";
+        sprite[0] = "1111111";
+        sprite[1] = "0111110";
         sprite[2] = "1111111";
         sprite[3] = "1111111";
         sprite[4] = "0111110";
