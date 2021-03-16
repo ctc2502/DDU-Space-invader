@@ -15,11 +15,10 @@ class Player extends SpaceShip {
 
     void updateObj() {
         if (keyPressed && keyCode == LEFT) {
-            x -= 5;
+            x -= 10;
         }
-        
         if (keyPressed && keyCode == RIGHT) {
-            x += 5;
+            x += 10;
         }
         
         if (keyPressed && keyCode == CONTROL && canShoot) {
