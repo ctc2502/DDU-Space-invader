@@ -10,7 +10,6 @@ void setup() {
 void draw() {
   background(51);
   SHIP.show(); 
-  
 }
 
 void keyPressed() {
