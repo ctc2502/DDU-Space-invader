@@ -10,6 +10,7 @@ PFont f;
 int Phase;
 PImage[] menuImg = new PImage[26];
 PImage[] whiteFade = new PImage[10];
+PImage SpaceShip;
 
 PImage Play01, Play02, Quit01, Quit02, Title;
 
@@ -40,6 +41,9 @@ void setup() {
     Title = loadImage("Tilte.png");
     Title.resize(1307/3, 846/3);
     f = createFont("Arial", 36, true);
+    
+    SpaceShip = loadImage("Ship.png");
+    SpaceShip.resize(50, 50);
 }
 
 void draw() {
@@ -90,7 +94,7 @@ void draw() {
     drawScore();
 
     player.draw();
-
+    
     for (int i = 0; i < bullets.size(); i++) {
         Bullet bullet = (Bullet) bullets.get(i);
         bullet.draw();

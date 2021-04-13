@@ -11,6 +11,7 @@ class Player extends SpaceShip {
         sprite[2] = "1111111";
         sprite[3] = "1111111";
         sprite[4] = "0111110";
+        
     }
 
     void updateObj() {
