@@ -1,5 +1,5 @@
 class Enemy extends SpaceShip {
-    int life = 3;
+    int life = 1;
     
     Enemy(int xpos, int ypos) {
         x = xpos;
@@ -10,9 +10,11 @@ class Enemy extends SpaceShip {
         sprite[2] = "1111111";
         sprite[3] = "0101010";
         sprite[4] = "1000001";
+        baseColor = color(200, 86, 80);
     }
 
     void updateObj() {
+        fill(baseColor);
         if (frameCount%30 == 0) {
             x += direction * gridsize;
         }
@@ -30,10 +32,11 @@ class Enemy extends SpaceShip {
                 bullets.remove(i);
                 
                 life--;
-                nextColor = color(255, 0, 0);
+                
                 
                 if (life == 0) {
                     score += 50;
+                    
                     return false;
                 }
                 
