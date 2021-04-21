@@ -16,7 +16,6 @@ class SpaceShip {
         //image(SpaceShip, xpos, ypos);
         for (int i = 0; i < sprite.length; i++) {
             String row = (String) sprite[i];
-           
             for (int j = 0; j < row.length(); j++) {
                 if (row.charAt(j) == '1') {
                   rect(xpos+(j * pixelsize), ypos+(i * pixelsize), pixelsize, pixelsize);  

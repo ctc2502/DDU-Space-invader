@@ -124,7 +124,7 @@ void draw() {
       Enemy enemy = (Enemy) enemies.get(i);
       if (!enemy.alive()) {
         enemies.remove(i);
-        saveScore();
+        
       } else {
         enemy.draw();
       }
@@ -144,6 +144,13 @@ void draw() {
     break;
   }
 }
+
+void keyReleased() {
+  if (key == 32) {
+   saveScore();
+  }
+}
+
 
 void drawScore() {
   textFont(f);
