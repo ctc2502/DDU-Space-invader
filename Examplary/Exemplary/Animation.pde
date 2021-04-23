@@ -3,13 +3,13 @@ class Animation {
   int imageCount;
   int frame;
   
-  Animation(String imagePrefix, int count, int w, int h) {
+  Animation(String imagePrefix, String type, int count, int w, int h) {
     imageCount = count;
     images = new PImage[imageCount];
 
     for (int i = 0; i < imageCount; i++) {
       // Use nf() to number format 'i' into four digits
-      String filename = imagePrefix + " (" + i + ").gif";
+      String filename = imagePrefix + " (" + i + type;
       images[i] = loadImage(filename);
       images[i].resize(w, h);
     }

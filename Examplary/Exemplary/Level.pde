@@ -13,6 +13,7 @@ image(Background00, 0, 0);
     pellets.clear();
     createEnemies();
     Phase = 0;
+    gameStart = false;
     }
 
     for (int i = 0; i < bullets.size(); i++) {

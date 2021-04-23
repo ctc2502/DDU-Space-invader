@@ -24,7 +24,9 @@ int OFFSizeH = Math.round(334/8);
 int ONsizeW = Math.round(2192/8);
 int ONsizeH = Math.round(584/8);
 
-Animation animation1;
+boolean gameStart = false;
+
+Animation menu01, transition;
 
 void setup() {
   smooth();
@@ -38,14 +40,15 @@ void setup() {
   size(800, 550);
   player = new Player();
   createEnemies();
-  
+
   /*menuImg = new PImage[21];
   for (int i = 1; i < menuImg.length; i++) {
     menuImg[i] = loadImage( "SpaceMan " + "(" + i + ")" + ".gif");
     menuImg[i].resize(width, height);
   }*/
   
-  animation1 = new Animation("SpaceMan/SpaceMan", 20, width, height);
+  menu01 = new Animation("SpaceMan/SpaceMan", ").gif", 20, width, height);
+  transition = new Animation("Fade/White", ").png", 11, width, height);
   
   Play01 = loadImage("PlayOFF.png");
   Play01.resize(OFFSizeW, OFFSizeH);
@@ -108,7 +111,7 @@ void draw() {
     /*if (menuImg[frameCount%21] != null) {
       image(menuImg[frameCount%21], 0, 0);
     }*/
-    animation1.display(0, 0);
+    menu01.display(0, 0);
     
     if (overRec(500, 400, OFFSizeW, OFFSizeH)) { 
       image(Start02, 500-15, 400-15);
@@ -120,7 +123,7 @@ void draw() {
   case 1:
     //kode
     frameRate(30);
-    animation1.display(0, 0);
+    menu01.display(0, 0);
     
     if (overRec(300, 200, OFFSizeW, OFFSizeH)) { 
       image(Play02, 300-15, 200-15);
@@ -136,6 +139,14 @@ void draw() {
       image(Quit02, 300-15, 300-15);
     } else {
       image(Quit01, 300, 300);
+    }
+    
+    if (gameStart == true) {
+    frameRate(15);
+    transition.display(0, 0);
+      if (transition.frame == 10) {
+        Phase = 2;
+      }
     }
 
     break;  
@@ -217,7 +228,7 @@ void mousePressed() {
   case 1:
     //kode
     if (overRec(300, 200, OFFSizeW, OFFSizeH)) { 
-      Phase = 2;
+      gameStart = true;
       player.x = width/gridsize/2;
       player.y = height - (10 * pixelsize);
       player.life = 3;
