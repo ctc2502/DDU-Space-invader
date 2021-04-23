@@ -4,7 +4,7 @@ class SpaceShip {
     color baseColor;
     //color nextColor = baseColor;
 
-    void draw() {
+    void display() {
         updateObj();
         drawSprite(x, y);
     }

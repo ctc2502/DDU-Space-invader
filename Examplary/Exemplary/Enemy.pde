@@ -1,5 +1,4 @@
 class Enemy extends SpaceShip {
-    int life = 1;
     
     Enemy(int xpos, int ypos) {
         x = xpos;
@@ -17,34 +16,14 @@ class Enemy extends SpaceShip {
         fill(baseColor);
         if (frameCount%30 == 0) {
             x += direction * gridsize;
+            if (random(0, 100) < 5) {
+            pellets.add(new Pellet(x, y+50));
+             }
         }
         
         if (incy == true) {
             y += gridsize / 2;
         }
-    }
-
-    boolean alive() {
-        for (int i = 0; i < bullets.size(); i++) {
-            Bullet bullet = (Bullet) bullets.get(i);
-            
-            if (bullet.x > x && bullet.x < x + 7 * pixelsize + 5 && bullet.y > y && bullet.y < y + 5 * pixelsize) {
-                bullets.remove(i);
-                
-                life--;
-                
-                
-                if (life == 0) {
-                    score += 50;
-                    
-                    return false;
-                }
-                
-                break;
-            }
-        }
-
-        return true;
     }
 
     boolean outside() {

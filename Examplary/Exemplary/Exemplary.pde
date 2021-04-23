@@ -3,6 +3,7 @@ int gridsize  = pixelsize * 7 + 5;
 Player player;
 ArrayList enemies = new ArrayList();
 ArrayList bullets = new ArrayList();
+ArrayList pellets = new ArrayList();
 int direction = 1;
 boolean incy = false;
 int score = 0;
@@ -103,12 +104,21 @@ void draw() {
     noFill();
     rect(0, 0, width*0.98, height*0.98);
     drawScore();
-
-    player.draw();
+    
+    if (player.hp()) {
+    player.display();
+    } else {
+    Phase = 0;
+    }
 
     for (int i = 0; i < bullets.size(); i++) {
       Bullet bullet = (Bullet) bullets.get(i);
-      bullet.draw();
+      bullet.display();
+    }
+    
+    for (int i = 0; i < pellets.size(); i++) {
+      Pellet pellet = (Pellet) pellets.get(i);
+      pellet.display();
     }
 
     for (int i = 0; i < enemies.size(); i++) {
@@ -122,11 +132,10 @@ void draw() {
 
     for (int i = 0; i < enemies.size(); i++) {
       Enemy enemy = (Enemy) enemies.get(i);
-      if (!enemy.alive()) {
+      if (!alive(enemy.x, enemy.y, 1)) {
         enemies.remove(i);
-        
       } else {
-        enemy.draw();
+        enemy.display();
       }
     }
     if(score == 750*round){
@@ -165,12 +174,14 @@ void createEnemies() {
   }
 }
 
+
+
 void saveScore() {
   try {
   int i = scoreBord.getRowCount();
   scoreBord.setString(i, 0, "AlbertGaming");
   scoreBord.setString(i,1,""+score);
-  scoreBord.setString(i,2,"Day: " + day()+" Mounth: " + month()+ " Hour: " + hour() + " Min: " + minute());
+  scoreBord.setString(i,2,"Day: " + day()+" Month: " + month()+ " Hour: " + hour() + " Min: " + minute());
   saveTable(scoreBord, "data/sb.csv");
 }
 catch(Exception e) {
@@ -205,6 +216,9 @@ void mousePressed() {
     //kode
     if (overRec(Button00.x, Button00.y, 1938/8, 334/8)) { 
       Phase = 1;
+      player.life = 3;
+      score = 0;
+      //createEnemies();
     }
     if (overRec(Button01.x, Button01.y, 1938/8, 334/8)) { 
       exit();
@@ -229,3 +243,26 @@ boolean overRec(float x, float y, float w, float h) {
     return false;
   }
 }
+
+boolean alive(int x, int y, int life) {
+        for (int i = 0; i < bullets.size(); i++) {
+            Bullet bullet = (Bullet) bullets.get(i);
+            
+            if (bullet.x > x && bullet.x < x + 7 * pixelsize + 5 && bullet.y > y && bullet.y < y + 5 * pixelsize) {
+                bullets.remove(i);
+                
+                life--;
+                
+                
+                if (life == 0) {
+                    score += 50;
+                    
+                    return false;
+                }
+                
+                break;
+            }
+        }
+
+        return true;
+    }

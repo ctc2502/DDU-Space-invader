@@ -1,6 +1,7 @@
 class Player extends SpaceShip {
     boolean canShoot = true;
     int shootdelay = 0;
+    int life = 3;
 
     Player() {
         x = width/gridsize/2;
@@ -28,11 +29,31 @@ class Player extends SpaceShip {
             canShoot = false;
             shootdelay = 0;
         }
-        
+        println(life);
         shootdelay++;
         
         if (shootdelay >= 20) {
             canShoot = true;
         }
+    }
+    
+    boolean hp() {
+        for (int i = 0; i < pellets.size(); i++) {
+            Pellet pellet = (Pellet) pellets.get(i);
+            
+            if (pellet.x > x && pellet.x < x + 7 * pixelsize + 5 && pellet.y > y && pellet.y < y + 5 * pixelsize) {
+                pellets.remove(i);
+                
+                life--;  
+                if (life == 0) {
+                    score += 50;
+                    //printl
+                    return false;
+                }
+                break;
+            }
+        }
+
+        return true;
     }
 }
