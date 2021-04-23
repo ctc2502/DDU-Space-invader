@@ -26,7 +26,7 @@ int ONsizeH = Math.round(584/8);
 
 boolean gameStart = false;
 
-Animation menu01, transition;
+Animation menu01, menu00, transition;
 
 void setup() {
   smooth();
@@ -48,6 +48,7 @@ void setup() {
   }*/
   
   menu01 = new Animation("SpaceMan/SpaceMan", ").gif", 20, width, height);
+  menu00 = new Animation("SpaceGirl/SpaceGirl", ").gif", 10, width, height);
   transition = new Animation("Fade/White", ").png", 11, width, height);
   
   Play01 = loadImage("PlayOFF.png");
@@ -70,8 +71,8 @@ void setup() {
   Quit02 = loadImage("QuitON.png");
   Quit02.resize(ONsizeW, ONsizeH);
 
-  Title = loadImage("Tilte.png");
-  Title.resize(1307/3, 846/3);
+  Title = loadImage("Tilte2.png");
+  Title.resize(1386/3, 682/3);
   f = createFont("Arial", 36, true);
 
   SpaceShip = loadImage("Ship.png");
@@ -107,48 +108,22 @@ void draw() {
     break;
   default:
     //kode
-    frameRate(30);
-    /*if (menuImg[frameCount%21] != null) {
-      image(menuImg[frameCount%21], 0, 0);
-    }*/
-    menu01.display(0, 0);
+    background(255);
+    frameRate(15);
+    menu00.display(-150, 0);
     
     if (overRec(500, 400, OFFSizeW, OFFSizeH)) { 
+      frameRate(30);
+      menu01.display(-150, 0);
       image(Start02, 500-15, 400-15);
     } else {
       image(Start01, 500, 400);
     }
-    image(Title, width/2-225, height/2-200);
+    image(Title, width/2-1386/3/2, -50);
     break;  
   case 1:
     //kode
-    frameRate(30);
-    menu01.display(0, 0);
-    
-    if (overRec(300, 200, OFFSizeW, OFFSizeH)) { 
-      image(Play02, 300-15, 200-15);
-    } else {
-      image(Play01, 300, 200);
-    }
-    if (overRec(300, 250, OFFSizeW, OFFSizeH)) { 
-      image(Help02, 300-15, 250-15);
-    } else {
-      image(Help01, 300, 250);
-    }
-    if (overRec(300, 300, OFFSizeW, OFFSizeH)) { 
-      image(Quit02, 300-15, 300-15);
-    } else {
-      image(Quit01, 300, 300);
-    }
-    
-    if (gameStart == true) {
-    frameRate(15);
-    transition.display(0, 0);
-      if (transition.frame == 10) {
-        Phase = 2;
-      }
-    }
-
+    Menu();
     break;  
   case 2:
     //kode
@@ -227,19 +202,19 @@ void mousePressed() {
     break;  
   case 1:
     //kode
-    if (overRec(300, 200, OFFSizeW, OFFSizeH)) { 
+    if (overRec(500, 200, OFFSizeW, OFFSizeH)) { 
       gameStart = true;
       player.x = width/gridsize/2;
       player.y = height - (10 * pixelsize);
       player.life = 3;
       score = 0;
-      
+      round = 1;
       //createEnemies();
     }
-    if (overRec(300, 250, OFFSizeW, OFFSizeH)) { 
+    if (overRec(500, 250, OFFSizeW, OFFSizeH)) { 
       Phase = -1;
     }
-    if (overRec(300, 300, OFFSizeW, OFFSizeH)) { 
+    if (overRec(500, 300, OFFSizeW, OFFSizeH)) { 
       exit();
     }
     break;  
