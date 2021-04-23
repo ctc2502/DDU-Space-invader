@@ -10,7 +10,7 @@ int score = 0;
 PFont f;
 int Phase;
 Table scoreBord;
-PImage[] menuImg = new PImage[26];
+PImage[] menuImg;
 PImage[] whiteFade = new PImage[10];
 PImage SpaceShip, Background00;
 int round = 1;
@@ -24,6 +24,8 @@ int OFFSizeH = Math.round(334/8);
 int ONsizeW = Math.round(2192/8);
 int ONsizeH = Math.round(584/8);
 
+Animation animation1;
+
 void setup() {
   smooth();
   scoreBord = loadTable("sb.csv");
@@ -31,15 +33,20 @@ void setup() {
   println("loaded: "+ loaded );
   
   background(0);
-  frameRate(60);
+  
   noStroke();
   size(800, 550);
   player = new Player();
   createEnemies();
+  
+  /*menuImg = new PImage[21];
   for (int i = 1; i < menuImg.length; i++) {
-    menuImg[i] = loadImage( "SpaceRoad " + "(" + i + ")" + ".gif");
+    menuImg[i] = loadImage( "SpaceMan " + "(" + i + ")" + ".gif");
     menuImg[i].resize(width, height);
-  }
+  }*/
+  
+  animation1 = new Animation("SpaceMan/SpaceMan", 20, width, height);
+  
   Play01 = loadImage("PlayOFF.png");
   Play01.resize(OFFSizeW, OFFSizeH);
   Play02 = loadImage("PlayON.png");
@@ -97,10 +104,12 @@ void draw() {
     break;
   default:
     //kode
-
-    if (menuImg[frameCount%26] != null && menuImg[frameCount%26] != menuImg[frameCount%1]) {
-      image(menuImg[frameCount%26], 0, 0);
-    }
+    frameRate(30);
+    /*if (menuImg[frameCount%21] != null) {
+      image(menuImg[frameCount%21], 0, 0);
+    }*/
+    animation1.display(0, 0);
+    
     if (overRec(500, 400, OFFSizeW, OFFSizeH)) { 
       image(Start02, 500-15, 400-15);
     } else {
@@ -110,9 +119,9 @@ void draw() {
     break;  
   case 1:
     //kode
-    if (menuImg[frameCount%26] != null && menuImg[frameCount%26] != menuImg[frameCount%1]) {
-      image(menuImg[frameCount%26], 0, 0);
-    }
+    frameRate(30);
+    animation1.display(0, 0);
+    
     if (overRec(300, 200, OFFSizeW, OFFSizeH)) { 
       image(Play02, 300-15, 200-15);
     } else {
@@ -132,6 +141,7 @@ void draw() {
     break;  
   case 2:
     //kode
+    frameRate(60);
     Level();
     break;
   case 3:
