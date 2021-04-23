@@ -14,12 +14,18 @@ PImage[] menuImg = new PImage[26];
 PImage[] whiteFade = new PImage[10];
 PImage SpaceShip, Background00;
 int round = 1;
-PImage Play01, Play02, Quit01, Quit02, Title;
+PImage Play01, Play02, Quit01, Quit02, Start01, Start02, Help01, Help02, Title;
 
 PVector Button00 = new PVector(500, 400);
 PVector Button01 = new PVector(500, 450);
 
+int OFFSizeW = Math.round(1938/8);
+int OFFSizeH = Math.round(334/8);
+int ONsizeW = Math.round(2192/8);
+int ONsizeH = Math.round(584/8);
+
 void setup() {
+  smooth();
   scoreBord = loadTable("sb.csv");
   boolean loaded = scoreBord == null;
   println("loaded: "+ loaded );
@@ -35,14 +41,24 @@ void setup() {
     menuImg[i].resize(width, height);
   }
   Play01 = loadImage("PlayOFF.png");
-  Play01.resize(1938/8, 334/8);
+  Play01.resize(OFFSizeW, OFFSizeH);
   Play02 = loadImage("PlayON.png");
-  Play02.resize(2192/8, 584/8);
+  Play02.resize(ONsizeW, ONsizeH);
+  
+  Help01 = loadImage("HelpOFF.png");
+  Help01.resize(OFFSizeW, OFFSizeH);
+  Help02 = loadImage("HelpON.png");
+  Help02.resize(ONsizeW, ONsizeH);
+  
+  Start01 = loadImage("StartOFF.png");
+  Start01.resize(OFFSizeW, OFFSizeH);
+  Start02 = loadImage("StartON.png");
+  Start02.resize(ONsizeW, ONsizeH);
 
   Quit01 = loadImage("QuitOFF.png");
-  Quit01.resize(1938/8, 334/8);
+  Quit01.resize(OFFSizeW, OFFSizeH);
   Quit02 = loadImage("QuitON.png");
-  Quit02.resize(2192/8, 584/8);
+  Quit02.resize(ONsizeW, ONsizeH);
 
   Title = loadImage("Tilte.png");
   Title.resize(1307/3, 846/3);
@@ -82,71 +98,41 @@ void draw() {
   default:
     //kode
 
-    if (menuImg[frameCount%24]!= null) {
-      image(menuImg[frameCount%24], 0, 0);
+    if (menuImg[frameCount%26] != null && menuImg[frameCount%26] != menuImg[frameCount%1]) {
+      image(menuImg[frameCount%26], 0, 0);
     }
-    if (overRec(Button00.x, Button00.y, 1938/8, 334/8)) { 
-      image(Play02, Button00.x-15, Button00.y-15);
+    if (overRec(500, 400, OFFSizeW, OFFSizeH)) { 
+      image(Start02, 500-15, 400-15);
     } else {
-      image(Play01, Button00.x, Button00.y);
-    }
-
-    if (overRec(Button01.x, Button01.y, 1938/8, 334/8)) { 
-      image(Quit02, Button01.x-15, Button01.y-15);
-    } else {
-      image(Quit01, Button01.x, Button01.y);
+      image(Start01, 500, 400);
     }
     image(Title, width/2-225, height/2-200);
     break;  
   case 1:
     //kode
-    image(Background00, 0, 0);
-    noFill();
-    rect(0, 0, width*0.98, height*0.98);
-    drawScore();
-    
-    if (player.hp()) {
-    player.display();
+    if (menuImg[frameCount%26] != null && menuImg[frameCount%26] != menuImg[frameCount%1]) {
+      image(menuImg[frameCount%26], 0, 0);
+    }
+    if (overRec(300, 200, OFFSizeW, OFFSizeH)) { 
+      image(Play02, 300-15, 200-15);
     } else {
-    Phase = 0;
+      image(Play01, 300, 200);
     }
-
-    for (int i = 0; i < bullets.size(); i++) {
-      Bullet bullet = (Bullet) bullets.get(i);
-      bullet.display();
+    if (overRec(300, 250, OFFSizeW, OFFSizeH)) { 
+      image(Help02, 300-15, 250-15);
+    } else {
+      image(Help01, 300, 250);
     }
-    
-    for (int i = 0; i < pellets.size(); i++) {
-      Pellet pellet = (Pellet) pellets.get(i);
-      pellet.display();
+    if (overRec(300, 300, OFFSizeW, OFFSizeH)) { 
+      image(Quit02, 300-15, 300-15);
+    } else {
+      image(Quit01, 300, 300);
     }
-
-    for (int i = 0; i < enemies.size(); i++) {
-      Enemy enemy = (Enemy) enemies.get(i);
-      if (enemy.outside() == true) {
-        direction *= (-1);
-        incy = true;
-        break;
-      }
-    }
-
-    for (int i = 0; i < enemies.size(); i++) {
-      Enemy enemy = (Enemy) enemies.get(i);
-      if (!alive(enemy.x, enemy.y, 1)) {
-        enemies.remove(i);
-      } else {
-        enemy.display();
-      }
-    }
-    if(score == 750*round){
-      round++;
-    createEnemies();
-    }
-    incy = false;
 
     break;  
   case 2:
     //kode
+    Level();
     break;
   case 3:
     //kode
@@ -214,18 +200,27 @@ void mousePressed() {
     break;
   default:
     //kode
-    if (overRec(Button00.x, Button00.y, 1938/8, 334/8)) { 
+    if (overRec(500, 400, OFFSizeW, OFFSizeH)) { 
       Phase = 1;
-      player.life = 3;
-      score = 0;
-      //createEnemies();
-    }
-    if (overRec(Button01.x, Button01.y, 1938/8, 334/8)) { 
-      exit();
     }
     break;  
   case 1:
     //kode
+    if (overRec(300, 200, OFFSizeW, OFFSizeH)) { 
+      Phase = 2;
+      player.x = width/gridsize/2;
+      player.y = height - (10 * pixelsize);
+      player.life = 3;
+      score = 0;
+      
+      //createEnemies();
+    }
+    if (overRec(300, 250, OFFSizeW, OFFSizeH)) { 
+      Phase = -1;
+    }
+    if (overRec(300, 300, OFFSizeW, OFFSizeH)) { 
+      exit();
+    }
     break;  
   case 2:
     //kode
