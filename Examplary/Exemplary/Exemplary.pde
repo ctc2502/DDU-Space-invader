@@ -14,7 +14,7 @@ PImage[] menuImg;
 PImage[] whiteFade = new PImage[10];
 PImage SpaceShip, Background00;
 int round = 1;
-PImage Play01, Play02, Quit01, Quit02, Start01, Start02, Help01, Help02, Title;
+PImage Play01, Play02, Quit01, Quit02, Start01, Start02, Help01, Help02, Title, Tutor01, Tutor02, Frame, A01, A02, D01, D02, W01, W02;
 
 PVector Button00 = new PVector(500, 400);
 PVector Button01 = new PVector(500, 450);
@@ -26,7 +26,7 @@ int ONsizeH = Math.round(584/8);
 
 boolean gameStart = false;
 
-Animation menu01, menu00, transition;
+Animation menu01, menu00, transition, transmission, tip1, tip2;
 
 void setup() {
   smooth();
@@ -50,6 +50,9 @@ void setup() {
   menu01 = new Animation("SpaceMan/SpaceMan", ").gif", 20, width, height);
   menu00 = new Animation("SpaceGirl/SpaceGirl", ").gif", 10, width, height);
   transition = new Animation("Fade/White", ").png", 11, width, height);
+  transmission = new Animation("StarF/StarFox", ").gif", 25, 100, 100);
+  tip1 = new Animation("tip1/LeftRightShip", ").gif", 25, 200, 200);
+  tip2 = new Animation("tip2/ShootShip", ").gif", 25, 200, 200);
   
   Play01 = loadImage("PlayOFF.png");
   Play01.resize(OFFSizeW, OFFSizeH);
@@ -70,9 +73,32 @@ void setup() {
   Quit01.resize(OFFSizeW, OFFSizeH);
   Quit02 = loadImage("QuitON.png");
   Quit02.resize(ONsizeW, ONsizeH);
-
+  
+  Tutor01 = loadImage("TutorialOFF.png");
+  Tutor01.resize(OFFSizeW, OFFSizeH);
+  Tutor02 = loadImage("TutorialON.png");
+  Tutor02.resize(ONsizeW, ONsizeH);
+  
   Title = loadImage("Tilte2.png");
   Title.resize(1386/3, 682/3);
+  Frame = loadImage("Frame.png");
+  Frame.resize(760, 385);
+  
+  A01 = loadImage("aKey.png");
+  A01.resize(50, 50);
+  A02 = loadImage("aKeyOFF.png");
+  A02.resize(50, 50);
+  
+  D01 = loadImage("dKey.png");
+  D01.resize(50, 50);
+  D02 = loadImage("dKeyOFF.png");
+  D02.resize(50, 50);
+  
+  W01 = loadImage("wKey.png");
+  W01.resize(50, 50);
+  W02 = loadImage("wKeyOFF.png");
+  W02.resize(50, 50);
+  
   f = createFont("Arial", 36, true);
 
   SpaceShip = loadImage("Ship.png");
@@ -104,10 +130,30 @@ void draw() {
     break;
   case -1:
     //kode
-
+    Menu();
+    image(Frame, width/2-Frame.width/2, height/2-Frame.height/2);
+    frameRate(30);
+    tip1.display(50, 200);
+    if (tip1.frame > 14) {
+    image(A01, 80, 100);
+    } else {   
+    image(A02, 80, 100);
+    }
+    if (tip1.frame < 14) {
+    image(D01, 180, 100);
+    } else {
+    image(D02, 180, 100);
+    }
+    tip2.display(330, 200);
+    if (tip2.frame < 2) {
+    image(W01, 400, 100);
+    } else {
+    image(W02, 400, 100);
+    }
     break;
   default:
     //kode
+    
     background(255);
     frameRate(15);
     menu00.display(-150, 0);
@@ -120,6 +166,8 @@ void draw() {
       image(Start01, 500, 400);
     }
     image(Title, width/2-1386/3/2, -50);
+    //transmission.display(width/2, height/2);
+    
     break;  
   case 1:
     //kode

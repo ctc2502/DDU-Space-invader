@@ -8,7 +8,6 @@ class Animation {
     images = new PImage[imageCount];
 
     for (int i = 0; i < imageCount; i++) {
-      // Use nf() to number format 'i' into four digits
       String filename = imagePrefix + " (" + i + type;
       images[i] = loadImage(filename);
       images[i].resize(w, h);
