@@ -8,11 +8,12 @@ image(Background00, 0, 0);
     if (player.hp()) {
     player.display(10);
     } else {
+    Phase = 3;
     enemies.clear();
     bullets.clear();
     pellets.clear();
     createEnemies(5,2);
-    Phase = 0;
+    saveScore();
     gameStart = false;
     }
 

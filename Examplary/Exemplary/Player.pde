@@ -48,7 +48,7 @@ class Player extends SpaceShip {
                 
                 life--;  
                 if (life == 0) {
-                    score += 50;
+                      score += 50;
                     //printl
                     return false;
                 }

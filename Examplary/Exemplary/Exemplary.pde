@@ -15,7 +15,8 @@ PImage[] whiteFade = new PImage[10];
 PImage SpaceShip, Background00;
 int round = 1;
 int subcnt;
-PImage Play01, Play02, Quit01, Quit02, Start01, Start02, Help01, Help02, Title, Tutor01, Tutor02, Tab, A01, A02, D01, D02, W01, W02;
+PImage Play01, Play02, Quit01, Quit02, Start01, Start02, Help01, Help02, Title, Tutor01, Tutor02, Tab, A01, A02, D01, D02, W01, W02, Back;
+int deku; 
 
 PVector Button00 = new PVector(500, 400);
 PVector Button01 = new PVector(500, 450);
@@ -32,9 +33,11 @@ Animation menu01, menu00, transition, transmission, tip1, tip2;
 
 PVector TabPOS = new PVector(width+1000, 200);
 
+int[] a;
+
 void setup() {
   smooth();
-  scoreBord = loadTable("sb.csv");
+  scoreBord = loadTable("data/sb.csv");
   boolean loaded = scoreBord == null;
   println("loaded: "+ loaded );
   
@@ -104,6 +107,9 @@ void setup() {
   W02 = loadImage("wKeyOFF.png");
   W02.resize(50, 50);
   
+  Back = loadImage("backArrow.png");
+  Back.resize(25, 25);
+  
   f = createFont("Arial", 36, true);
 
   SpaceShip = loadImage("Ship.png");
@@ -164,6 +170,12 @@ void draw() {
     } else {
       image(Tutor01, 520, 260);
     }
+    
+    if (overRec(50, 50, 25, 25)) { 
+      image(Back, 50-2, 50-2, 27, 27);
+    } else {
+      image(Back, 50, 50);
+    }
     Debug();
     break;
   default:
@@ -196,14 +208,30 @@ void draw() {
     break;
   case 3:
     //kode
+    image(Background00, 0, 0);
+    image(Tab, width/2-Tab.width/2, height/2-Tab.height/2);
+    try {
+    fill(255);
+    text(scoreBord.getString(1, 0) + " " + scoreBord.getString(1, 1) + " " + scoreBord.getString(1, 2), 250, 150);
+    text(scoreBord.getString(2, 0) + " " + scoreBord.getString(2, 1) + " " + scoreBord.getString(2, 2), 250, 200);
+    text(scoreBord.getString(3, 0) + " " + scoreBord.getString(3, 1) + " " + scoreBord.getString(3, 2), 250, 250);
+    text(scoreBord.getString(4, 0) + " " + scoreBord.getString(4, 1) + " " + scoreBord.getString(4, 2), 250, 300);
+    text(scoreBord.getString(5, 0) + " " + scoreBord.getString(5, 1) + " " + scoreBord.getString(5, 2), 250, 350);
+    } catch(Exception e) {
+    println();
+    }
+    if (overRec(50, 50, 25, 25)) { 
+      image(Back, 50-2, 50-2, 27, 27);
+    } else {
+      image(Back, 50, 50);
+    }
+    
+    Debug();
     break;
   }
 }
 
 void keyReleased() {
-  if (key == 32) {
-   saveScore();
-  }
   if (Phase == -2) {
   TutorialKey();
   }
@@ -228,10 +256,10 @@ void createEnemies(int ROW, int COLUMN) {
 
 void saveScore() {
   try {
-  int i = scoreBord.getRowCount();
-  scoreBord.setString(i, 0, "AlbertGaming");
-  scoreBord.setString(i,1,""+score);
-  scoreBord.setString(i,2,"Day: " + day()+" Month: " + month()+ " Hour: " + hour() + " Min: " + minute());
+  deku = scoreBord.getRowCount();
+  scoreBord.setString(deku, 0, "AlbertGaming");
+  scoreBord.setString(deku, 1,""+score);
+  scoreBord.setString(deku, 2, hour() + ":" + minute() + " " + day() + "/" + month()+ " ");
   saveTable(scoreBord, "data/sb.csv");
 }
 catch(Exception e) {
@@ -266,6 +294,9 @@ void mousePressed() {
       enemies.clear();
       createEnemies(1, 0);
     }
+    if (overRec(50, 50, 25, 25)) { 
+      Phase = 1;
+    }
     break;
   default:
     //kode
@@ -297,6 +328,9 @@ void mousePressed() {
     break;
   case 3:
     //kode
+    if (overRec(50, 50, 25, 25)) { 
+      Phase = 1;
+    }
     break;
   }
 }
