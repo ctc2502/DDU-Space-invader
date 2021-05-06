@@ -34,7 +34,7 @@ image(Background00, 0, 0);
         break;
       }
     }
-    //println();
+    println(enemies.size());
     for (int i = 0; i < enemies.size(); i++) {
       Enemy enemy = (Enemy) enemies.get(i);
       if (!alive(enemy.x, enemy.y, 1)) {
@@ -44,9 +44,9 @@ image(Background00, 0, 0);
       }
     }
     
-    if(score == 750*round){
+    if(enemies.size() == 0){
       round++;
-    createEnemies(5,2);
+      createEnemies(int(random(1,10)),int(random(0,5)));
     }
     incy = false;
 }

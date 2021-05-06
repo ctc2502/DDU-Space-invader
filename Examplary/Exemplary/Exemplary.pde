@@ -181,7 +181,6 @@ void draw() {
       image(Start01, 500, 400);
     }
     image(Title, width/2-1386/3/2, -50);
-    //transmission.display(width/2, height/2);
     Debug();
     break;  
   case 1:
@@ -212,7 +211,9 @@ void keyReleased() {
 
 
 void drawScore() {
+  fill(255);
   text("Score: " + String.valueOf(score), 300, 50);
+  text("Lives: " + String.valueOf(player.life), 50, 50);
 }
 
 void createEnemies(int ROW, int COLUMN) {
@@ -281,7 +282,8 @@ void mousePressed() {
       player.life = 3;
       score = 0;
       round = 1;
-      //createEnemies();
+      enemies.clear();
+      createEnemies(5, 2);
     }
     if (overRec(500, 250, OFFSizeW, OFFSizeH)) { 
       Phase = -1;

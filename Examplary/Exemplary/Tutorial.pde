@@ -108,12 +108,16 @@ void TutorialMouse() {
   case 9:
     Dialog = 0;
     subcnt = 0;
+    score = 0;
     enemies.clear();
     bullets.clear();
     pellets.clear();
     createEnemies(1,0);
     Phase = 1;
     gameStart = false;
+    TabPOS.x = width+500;
+    player.x = width/gridsize/2;
+    player.y = height - (10 * pixelsize);
     break;
   }
 }
