@@ -44,7 +44,7 @@ void setup() {
   noStroke();
   size(800, 550);
   player = new Player();
-  createEnemies();
+  createEnemies(5, 2);
 
   /*menuImg = new PImage[21];
   for (int i = 1; i < menuImg.length; i++) {
@@ -205,6 +205,9 @@ void keyReleased() {
   if (key == 32) {
    saveScore();
   }
+  if (Phase == -2) {
+  TutorialKey();
+  }
 }
 
 
@@ -212,9 +215,9 @@ void drawScore() {
   text("Score: " + String.valueOf(score), 300, 50);
 }
 
-void createEnemies() {
-  for (int i = 0; i < 5/*width/gridsize/2*/; i++) {
-    for (int j = 0; j <= 2; j++) {
+void createEnemies(int ROW, int COLUMN) {
+  for (int i = 0; i < ROW/*width/gridsize/2*/; i++) {
+    for (int j = 0; j <= COLUMN; j++) {
       enemies.add(new Enemy(i*gridsize, j*gridsize + 70));
     }
   }
@@ -259,6 +262,8 @@ void mousePressed() {
     //kode
     if (overRec(520, 260, OFFSizeW, OFFSizeH)) { 
       Phase = -2;
+      enemies.clear();
+      createEnemies(1, 0);
     }
     break;
   default:
@@ -345,7 +350,7 @@ void typeWrite(String msg, int x, int y) {
   textAlign(LEFT);
 }
 
-void help(String hints) {
+void help(String hints, int numb) {
   imageMode(CENTER);
   textAlign(LEFT);
   
@@ -360,6 +365,9 @@ void help(String hints) {
       TabPOS.x -= 10;
     } 
   } 
+  if (subcnt > numb) {
+      transmission.frame = 0;
+    }
   imageMode(0);
   textAlign(LEFT);
 }

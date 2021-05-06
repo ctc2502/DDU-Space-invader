@@ -11,7 +11,7 @@ image(Background00, 0, 0);
     enemies.clear();
     bullets.clear();
     pellets.clear();
-    createEnemies();
+    createEnemies(5,2);
     Phase = 0;
     gameStart = false;
     }
@@ -46,7 +46,7 @@ image(Background00, 0, 0);
     
     if(score == 750*round){
       round++;
-    createEnemies();
+    createEnemies(5,2);
     }
     incy = false;
 }
