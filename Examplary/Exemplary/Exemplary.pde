@@ -14,6 +14,7 @@ PImage[] menuImg;
 PImage[] whiteFade = new PImage[10];
 PImage SpaceShip, Background00;
 int round = 1;
+int subcnt;
 PImage Play01, Play02, Quit01, Quit02, Start01, Start02, Help01, Help02, Title, Tutor01, Tutor02, Frame, A01, A02, D01, D02, W01, W02;
 
 PVector Button00 = new PVector(500, 400);
@@ -127,11 +128,15 @@ void draw() {
     break;
   case -2:
     //kode
+    Tutorial();
     break;
   case -1:
     //kode
     Menu();
     image(Frame, width/2-Frame.width/2, height/2-Frame.height/2);
+    stroke(255);
+    strokeWeight(3);
+    line(470, 105, 470, 440);
     frameRate(30);
     tip1.display(50, 200);
     if (tip1.frame > 14) {
@@ -144,12 +149,18 @@ void draw() {
     } else {
     image(D02, 180, 100);
     }
-    tip2.display(330, 200);
+    tip2.display(300, 200);
     if (tip2.frame < 2) {
-    image(W01, 400, 100);
+    image(W01, 370, 100);
     } else {
-    image(W02, 400, 100);
+    image(W02, 370, 100);
     }
+    if (overRec(520, 260, OFFSizeW, OFFSizeH)) { 
+      image(Tutor02, 520-15, 260-15);
+    } else {
+      image(Tutor01, 520, 260);
+    }
+    Debug();
     break;
   default:
     //kode
@@ -167,16 +178,18 @@ void draw() {
     }
     image(Title, width/2-1386/3/2, -50);
     //transmission.display(width/2, height/2);
-    
+    Debug();
     break;  
   case 1:
     //kode
     Menu();
+    Debug();
     break;  
   case 2:
     //kode
     frameRate(60);
     Level();
+    Debug();
     break;
   case 3:
     //kode
@@ -240,7 +253,9 @@ void mousePressed() {
     break;
   case -1:
     //kode
-
+    if (overRec(520, 260, OFFSizeW, OFFSizeH)) { 
+      Phase = -2;
+    }
     break;
   default:
     //kode
@@ -305,3 +320,23 @@ boolean alive(int x, int y, int life) {
 
         return true;
     }
+    
+void Debug() {
+  //Debug
+  if (mouseButton == RIGHT) {
+    ellipse( mouseX, mouseY, 2, 2 );
+    fill(255);
+    text( "x: " + mouseX + " y: " + mouseY, mouseX + 2, mouseY );
+    text(frameRate, mouseX+64, mouseY+64);
+    fill(255);
+  }
+}
+    
+void typeWrite(String msg, int x, int y) {
+  textAlign(CENTER);
+  fill(255);
+  text (msg.substring(0, constrain(int(subcnt/5), 0, msg.length())), x, y);
+  //println(subcnt);
+  subcnt++;
+  textAlign(LEFT);
+}

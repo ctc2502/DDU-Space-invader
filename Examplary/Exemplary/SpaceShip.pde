@@ -18,6 +18,8 @@ class SpaceShip {
             String row = (String) sprite[i];
             for (int j = 0; j < row.length(); j++) {
                 if (row.charAt(j) == '1') {
+                  strokeWeight(0);
+                  noStroke();
                   rect(xpos+(j * pixelsize), ypos+(i * pixelsize), pixelsize, pixelsize);  
                   //image(SpaceShip, xpos+(j * pixelsize), ypos+(i * pixelsize), pixelsize, pixelsize);
                 }
