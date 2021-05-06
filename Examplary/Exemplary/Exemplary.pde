@@ -293,6 +293,10 @@ void mousePressed() {
       Phase = -2;
       enemies.clear();
       createEnemies(1, 0);
+      score = 0;
+      player.life = 3;
+      player.x = width/gridsize/2;
+      player.y = height - (10 * pixelsize);
     }
     if (overRec(50, 50, 25, 25)) { 
       Phase = 1;
