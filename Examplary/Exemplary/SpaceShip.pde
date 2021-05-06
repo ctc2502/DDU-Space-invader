@@ -4,8 +4,8 @@ class SpaceShip {
     color baseColor;
     //color nextColor = baseColor;
 
-    void display() {
-        updateObj();
+    void display(int velo) {
+        updateObj(velo);
         drawSprite(x, y);
     }
 
@@ -28,6 +28,6 @@ class SpaceShip {
         
     }
 
-    void updateObj() {
+    void updateObj(int speed) {
     }
 }

@@ -12,9 +12,9 @@ class Enemy extends SpaceShip {
         baseColor = color(200, 86, 80);
     }
 
-    void updateObj() {
+    void updateObj(int speed) {
         fill(baseColor);
-        if (frameCount%60 == 0) {
+        if (frameCount%60 <= speed) {
             x += direction * gridsize;
             if (random(0, 100) < 5) {
             pellets.add(new Pellet(x, y+50));

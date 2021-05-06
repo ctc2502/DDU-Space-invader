@@ -16,15 +16,15 @@ class Player extends SpaceShip {
         
     }
 
-    void updateObj() {
-        if (keyPressed && keyCode == LEFT) {
-            x -= 10;
-        }
-        if (keyPressed && keyCode == RIGHT) {
-            x += 10;
+    void updateObj(int speed) {
+        if (keyPressed && (key == 'A' || key == 'a')) {
+            x -= speed;
+        } 
+        if (keyPressed && (key == 'D' || key == 'd')) {
+            x += speed;
         }
         
-        if (keyPressed && keyCode == UP && canShoot) {
+        if (keyPressed && (key == 'W' || key == 'w') && canShoot) {
             bullets.add(new Bullet(x, y));
             canShoot = false;
             shootdelay = 0;

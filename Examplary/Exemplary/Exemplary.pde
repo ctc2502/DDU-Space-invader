@@ -15,10 +15,11 @@ PImage[] whiteFade = new PImage[10];
 PImage SpaceShip, Background00;
 int round = 1;
 int subcnt;
-PImage Play01, Play02, Quit01, Quit02, Start01, Start02, Help01, Help02, Title, Tutor01, Tutor02, Frame, A01, A02, D01, D02, W01, W02;
+PImage Play01, Play02, Quit01, Quit02, Start01, Start02, Help01, Help02, Title, Tutor01, Tutor02, Tab, A01, A02, D01, D02, W01, W02;
 
 PVector Button00 = new PVector(500, 400);
 PVector Button01 = new PVector(500, 450);
+PFont VCR;
 
 int OFFSizeW = Math.round(1938/8);
 int OFFSizeH = Math.round(334/8);
@@ -29,6 +30,8 @@ boolean gameStart = false;
 
 Animation menu01, menu00, transition, transmission, tip1, tip2;
 
+PVector TabPOS = new PVector(width+1000, 200);
+
 void setup() {
   smooth();
   scoreBord = loadTable("sb.csv");
@@ -36,7 +39,8 @@ void setup() {
   println("loaded: "+ loaded );
   
   background(0);
-  
+  VCR = createFont("VCR.ttf", 20);
+  textFont(VCR);
   noStroke();
   size(800, 550);
   player = new Player();
@@ -82,8 +86,8 @@ void setup() {
   
   Title = loadImage("Tilte2.png");
   Title.resize(1386/3, 682/3);
-  Frame = loadImage("Frame.png");
-  Frame.resize(760, 385);
+  Tab = loadImage("Frame.png");
+  Tab.resize(760, 385);
   
   A01 = loadImage("aKey.png");
   A01.resize(50, 50);
@@ -133,7 +137,7 @@ void draw() {
   case -1:
     //kode
     Menu();
-    image(Frame, width/2-Frame.width/2, height/2-Frame.height/2);
+    image(Tab, width/2-Tab.width/2, height/2-Tab.height/2);
     stroke(255);
     strokeWeight(3);
     line(470, 105, 470, 440);
@@ -205,7 +209,6 @@ void keyReleased() {
 
 
 void drawScore() {
-  textFont(f);
   text("Score: " + String.valueOf(score), 300, 50);
 }
 
@@ -250,6 +253,7 @@ void mousePressed() {
     break;
   case -2:
     //kode
+    TutorialMouse();
     break;
   case -1:
     //kode
@@ -333,10 +337,29 @@ void Debug() {
 }
     
 void typeWrite(String msg, int x, int y) {
-  textAlign(CENTER);
-  fill(255);
+  textAlign(LEFT);
+  //fill(255);
   text (msg.substring(0, constrain(int(subcnt/5), 0, msg.length())), x, y);
-  //println(subcnt);
+  println(subcnt);
   subcnt++;
+  textAlign(LEFT);
+}
+
+void help(String hints) {
+  imageMode(CENTER);
+  textAlign(LEFT);
+  
+  image(Tab, TabPOS.x, TabPOS.y, 400, 100);
+  transmission.display(TabPOS.x-150, TabPOS.y);
+  fill(#03C04A);
+  text("Fox Mccloud:", (int)TabPOS.x-95, (int)TabPOS.y-20);
+  fill(255);
+  typeWrite(hints, (int)TabPOS.x-95, (int)TabPOS.y+10);
+  if (Phase == -2) {
+    if (TabPOS.x >  width-200) {
+      TabPOS.x -= 10;
+    } 
+  } 
+  imageMode(0);
   textAlign(LEFT);
 }

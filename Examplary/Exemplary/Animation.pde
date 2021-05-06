@@ -17,7 +17,7 @@ class Animation {
   void display(float xpos, float ypos) {
     frame = (frame+1) % imageCount;
     image(images[frame], xpos, ypos);
-    println(frame);
+    //println(frame);
   }
   
   int getWidth() {
