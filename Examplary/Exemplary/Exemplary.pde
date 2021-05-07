@@ -212,11 +212,9 @@ void draw() {
     image(Tab, width/2-Tab.width/2, height/2-Tab.height/2);
     try {
     fill(255);
-    text(scoreBord.getString(1, 0) + " " + scoreBord.getString(1, 1) + " " + scoreBord.getString(1, 2), 250, 150);
-    text(scoreBord.getString(2, 0) + " " + scoreBord.getString(2, 1) + " " + scoreBord.getString(2, 2), 250, 200);
-    text(scoreBord.getString(3, 0) + " " + scoreBord.getString(3, 1) + " " + scoreBord.getString(3, 2), 250, 250);
-    text(scoreBord.getString(4, 0) + " " + scoreBord.getString(4, 1) + " " + scoreBord.getString(4, 2), 250, 300);
-    text(scoreBord.getString(5, 0) + " " + scoreBord.getString(5, 1) + " " + scoreBord.getString(5, 2), 250, 350);
+    for (int o = 1; o <= 5; o++) {
+    text(scoreBord.getString(o, 0) + " " + scoreBord.getString(o, 1) + " " + scoreBord.getString(o, 2), 250, o*50+100);
+      }
     } catch(Exception e) {
     println();
     }
