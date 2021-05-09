@@ -35,7 +35,7 @@ image(Background00, 0, 0);
         break;
       }
     }
-    println(enemies.size());
+    //println(enemies.size());
     for (int i = 0; i < enemies.size(); i++) {
       Enemy enemy = (Enemy) enemies.get(i);
       if (!alive(enemy.x, enemy.y, 1)) {
