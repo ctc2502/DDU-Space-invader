@@ -6,9 +6,9 @@ class Bullet {
         y = ypos;
     }
 
-    void display() {
+    void display(int rate) {
         fill(255);
         rect(x, y, pixelsize, pixelsize);
-        y -= pixelsize * 2;
+        y -= rate;
     }
 }

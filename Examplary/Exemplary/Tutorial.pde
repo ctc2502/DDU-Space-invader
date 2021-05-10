@@ -7,26 +7,24 @@ void Tutorial() {
   noFill();
   rect(0, 0, width*0.98, height*0.98);
   drawScore();
-
+  if (run) {
   if (player.hp()) {
     player.display(spd);
   } else {
-    enemies.clear();
-    bullets.clear();
-    pellets.clear();
+    reset();
     createEnemies(1,0);
     Phase = 0;
     gameStart = false;
   }
-
+  
   for (int i = 0; i < bullets.size(); i++) {
     Bullet bullet = (Bullet) bullets.get(i);
-    bullet.display();
+    bullet.display(pixelsize * 2);
   }
 
   for (int i = 0; i < pellets.size(); i++) {
     Pellet pellet = (Pellet) pellets.get(i);
-    pellet.display();
+    pellet.display(pixelsize * 2);
   }
 
   for (int i = 0; i < enemies.size(); i++) {
@@ -51,78 +49,90 @@ void Tutorial() {
 
   switch(Dialog) {
   default:
-    help("Starpilot Fox Mccloud,\nReporting for duty", 200);
+    help("Starpilot Fox Mccloud,\nReporting for duty");
     spd = 0;
     bullets.clear();
     break;
   case 1:
-    help("I'll learn you the basic\nprinciples of flyng", 200);
+    help("I'll learn you the basic\nprinciples of flyng");
     spd = 0;
     bullets.clear();
     break;
   case 2:
-    help("Press 'A' and 'D',\nto move left and right", 200);
+    help("Press 'A' and 'D',\nto move left and right");
     spd = 10;
     bullets.clear();
     break;
   case 3:
-    help("Nice moves pilot!", 100);
+    help("Nice moves pilot!");
     bullets.clear();
     break;
   case 4:
-    help("You do not only have to\noutmaneuver your enemies", 230);
+    help("You do not only have to\noutmaneuver your enemies");
     bullets.clear();
     break;
   case 5:
-    help("But you also have to\nreturn back the fire", 200);
+    help("But you also have to\nreturn back the fire");
     bullets.clear();
     break;
   case 6:
-    help("Press 'W' to fire bullets\nat your adversaries", 200);
+    help("Press 'W' to fire bullets\nat your adversaries");
     if (score == 50) {
       subcnt = 0;
       Dialog = 7;
     }
     break;
   case 7:
-    help("They didn't stand\na chance!", 150);
+    help("They didn't stand\na chance!");
   break;
   case 8:
-    help("That covers\nall the basics", 100);
+    help("That covers\nall the basics");
     break;
   case 9:
-    help("Now get out there and\nkick some slimy alien ass!", 100);
+    help("Now get out there and\nkick some slimy alien ass!");
+    }
+  } else {
+   Pause();
   }
 }
 
-void TutorialMouse() {
+void TutorialMouse(int size) {
+  if (run) {
   switch(Dialog) {
   default:
+  if(size >subcnt){
+  subcnt = 1000;
+  }
+  else{
     subcnt=0;
     Dialog++;
+  }
     break;
-  case 2:
+  case 2:{
+    if(size >subcnt){
+  subcnt =1000;
+  }}
     break;
-  case 6:
+  case 6:{
+    if(size >subcnt){
+  subcnt =1000;
+  }}
     break;
   case 9:
-    Dialog = 0;
-    subcnt = 0;
-    score = 0;
-    enemies.clear();
-    bullets.clear();
-    pellets.clear();
+    if(size > subcnt){
+  subcnt =1000;
+  } else {
+    reset();
     createEnemies(1,0);
     Phase = 1;
-    gameStart = false;
-    TabPOS.x = width+500;
-    player.x = width/gridsize/2;
-    player.y = height - (10 * pixelsize);
     break;
+      }
+    }
   }
 }
 
 void TutorialKey() {
+  if (run) {
   switch(Dialog) {
   default:
     break;
@@ -139,5 +149,6 @@ void TutorialKey() {
       }
     }
     break;
+  }
   }
 }

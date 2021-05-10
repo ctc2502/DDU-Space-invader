@@ -1,7 +1,7 @@
 class Enemy extends SpaceShip {
     
     Enemy(int xpos, int ypos) {
-        x = xpos;
+        x = xpos+100;
         y = ypos;
         sprite    = new String[5];
         sprite[0] = "1011101";
@@ -16,7 +16,7 @@ class Enemy extends SpaceShip {
         fill(baseColor);
         if (frameCount%60 <= speed) {
             x += direction * gridsize;
-            if (random(0, 100) < 5) {
+            if (random(0, 100) < 10) {
             pellets.add(new Pellet(x, y+50));
              }
         }
@@ -24,9 +24,14 @@ class Enemy extends SpaceShip {
         if (incy == true) {
             y += gridsize / 2;
         }
+       
+        if (y >= 500) {
+          player.life = 0;
+        }
+        //println(y);
     }
 
     boolean outside() {
-        return x + (direction*gridsize) < 0 || x + (direction*gridsize) > width - gridsize;
+        return x + (direction*gridsize) < 10 || x + (direction*gridsize) > width - gridsize;
     }
 }

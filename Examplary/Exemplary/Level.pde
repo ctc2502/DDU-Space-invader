@@ -5,13 +5,12 @@ image(Background00, 0, 0);
     rect(0, 0, width*0.98, height*0.98);
     drawScore();
     
+    if (run) {
     if (player.hp()) {
     player.display(10);
     } else {
     Phase = 3;
-    enemies.clear();
-    bullets.clear();
-    pellets.clear();
+    reset();
     createEnemies(5,2);
     saveScore();
     gameStart = false;
@@ -19,12 +18,11 @@ image(Background00, 0, 0);
 
     for (int i = 0; i < bullets.size(); i++) {
       Bullet bullet = (Bullet) bullets.get(i);
-      bullet.display();
+      bullet.display(pixelsize * 2);
     }
-    
     for (int i = 0; i < pellets.size(); i++) {
       Pellet pellet = (Pellet) pellets.get(i);
-      pellet.display();
+      pellet.display(pixelsize * 2);
     }
 
     for (int i = 0; i < enemies.size(); i++) {
@@ -35,7 +33,6 @@ image(Background00, 0, 0);
         break;
       }
     }
-    //println(enemies.size());
     for (int i = 0; i < enemies.size(); i++) {
       Enemy enemy = (Enemy) enemies.get(i);
       if (!alive(enemy.x, enemy.y, 1)) {
@@ -45,9 +42,80 @@ image(Background00, 0, 0);
       }
     }
     
-    if(enemies.size() == 0){
+    for (int i = 0; i < enemies2.size(); i++) {
+      Enemy2 enemy2 = (Enemy2) enemies2.get(i);
+      if (!alive(enemy2.x, enemy2.y, 3)) {
+        enemies2.remove(i);
+      } else {
+        enemy2.display(1);
+      }
+    }
+     for (int i = 0; i < enemies2.size(); i++) {
+      Enemy2 enemy2 = (Enemy2) enemies2.get(i);
+      if (enemy2.outside() == true) {
+        direction *= (-1);
+        incy = true;
+        break;
+      }
+    }
+    
+    if(enemies.size() == 0 && enemies2.size() == 0){
       round++;
       createEnemies(int(random(1,10)),int(random(0,5)));
+      //createEnemies2(int(random(0,5)),int(random(0,10)));
     }
     incy = false;
+      
+    } else {
+      Pause();
+    }
+}
+
+void Pause() {
+      player.display(0);
+      
+      for (int i = 0; i < bullets.size(); i++) {
+      Bullet bullet = (Bullet) bullets.get(i);
+      bullet.display(0);
+      }
+    
+      for (int i = 0; i < pellets.size(); i++) {
+      Pellet pellet = (Pellet) pellets.get(i);
+      pellet.display(0);
+      }
+      
+      for (int i = 0; i < enemies.size(); i++) {
+      Enemy enemy = (Enemy) enemies.get(i);
+      if (!alive(enemy.x, enemy.y, 1)) {
+        enemies.remove(i);
+      } else {
+        enemy.display(-1);
+        }
+      }
+      for (int i = 0; i < enemies2.size(); i++) {
+      Enemy2 enemy2 = (Enemy2) enemies2.get(i);
+      if (!alive(enemy2.x, enemy2.y, 3)) {
+        enemies2.remove(i);
+      } else {
+        enemy2.display(-1);
+        }
+      }
+      
+      textSize(50);
+      fill(255);
+      textAlign(CENTER);
+      text("PAUSED", width/2, height/2);
+      textAlign(0);
+      textSize(20);
+      if (overRec(500, 500, OFFSizeW, OFFSizeH)) { 
+      image(Resum02, 500-15, 500-15);
+    } else {
+      image(Resum01, 500, 500);
+    }
+    
+    if (overRec(50, 500, OFFSizeW, OFFSizeH)) { 
+      image(Menu02, 100-15, 500-15);
+    } else {
+      image(Menu01, 100, 500);
+    }
 }

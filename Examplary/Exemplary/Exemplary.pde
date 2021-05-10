@@ -2,6 +2,7 @@ int pixelsize = 4;
 int gridsize  = pixelsize * 7 + 5;
 Player player;
 ArrayList enemies = new ArrayList();
+ArrayList enemies2 = new ArrayList();
 ArrayList bullets = new ArrayList();
 ArrayList pellets = new ArrayList();
 int direction = 1;
@@ -15,8 +16,8 @@ PImage[] whiteFade = new PImage[10];
 PImage SpaceShip, Background00;
 int round = 1;
 int subcnt;
-PImage Play01, Play02, Quit01, Quit02, Start01, Start02, Help01, Help02, Title, Tutor01, Tutor02, Tab, A01, A02, D01, D02, W01, W02, Back;
-int deku; 
+PImage Play01, Play02, Quit01, Quit02, Start01, Start02, Help01, Help02, Title, Tutor01, Tutor02, Tab, A01, A02, D01, D02, W01, W02, Menu01, Menu02, Resum01, Resum02, Back;
+int sblimit;
 
 PVector Button00 = new PVector(500, 400);
 PVector Button01 = new PVector(500, 450);
@@ -27,15 +28,17 @@ int OFFSizeH = Math.round(334/8);
 int ONsizeW = Math.round(2192/8);
 int ONsizeH = Math.round(584/8);
 
+boolean skipText;
 boolean gameStart = false;
 
 Animation menu01, menu00, transition, transmission, tip1, tip2;
 
 PVector TabPOS = new PVector(width+1000, 200);
 
-int[] sasuke = new int[100];
-int[] Vscores = new int[100];
-int scoreV;
+int[] listScores = new int[100];
+int[] sortScores = new int[100];
+
+boolean run = true; 
 
 void setup() {
   smooth();
@@ -51,8 +54,9 @@ void setup() {
   player = new Player();
   createEnemies(5, 2);
   for (int o = 1; o < scoreBord.getRowCount(); o++) {
+    int scoreV;
     scoreV = Integer.valueOf(scoreBord.getString(o, 1)); 
-    sasuke[o-1] = scoreV;
+    listScores[o-1] = scoreV;
   }
   
   /*
@@ -93,6 +97,16 @@ void setup() {
   Tutor01.resize(OFFSizeW, OFFSizeH);
   Tutor02 = loadImage("TutorialON.png");
   Tutor02.resize(ONsizeW, ONsizeH);
+  
+  Menu01 = loadImage("MenuOFF.png");
+  Menu01.resize(OFFSizeW, OFFSizeH);
+  Menu02 = loadImage("MenuON.png");
+  Menu02.resize(ONsizeW, ONsizeH);
+  
+  Resum01 = loadImage("ResumeOFF.png");
+  Resum01.resize(OFFSizeW, OFFSizeH);
+  Resum02 = loadImage("ResumeON.png");
+  Resum02.resize(ONsizeW, ONsizeH);
 
   Title = loadImage("Tilte2.png");
   Title.resize(1386/3, 682/3);
@@ -187,7 +201,7 @@ void draw() {
     break;
   default:
     //kode
-    println(Vscores);
+    //println(sortScores);
     background(255);
     frameRate(15);
     menu00.display(-150, 0);
@@ -216,17 +230,24 @@ void draw() {
   case 3:
     //kode
     //println(scoreBord.getRowCount());
-    Vscores = sort(sasuke);
+    sortScores = sort(listScores);
     image(Background00, 0, 0);
     image(Tab, width/2-Tab.width/2, height/2-Tab.height/2);
     
     try {
       fill(255);
-      for (int o = 95; o <= Vscores.length; o++) {
-          scoreV = Vscores[o];
+      textAlign(CENTER);
+      textSize(50);
+      text("SCOREBOARD", width/2, 100);
+      textSize(20);
+      text("Your score:\n" + score, 600, 150);
+      for (int o = 95; o <= sortScores.length; o++) {
+          int scoreV = sortScores[o];
           println(scoreV);
-          text(scoreBord.getString(100-o, 0) + " " + scoreV + " " + scoreBord.getString(100-o, 2), 250, (100-o)*50+100);
+          textAlign(CENTER);
+          text(scoreBord.getString(100-o, 0) + " " + scoreV + " " + scoreBord.getString(100-o, 2), 275, (100-o)*50+100);
       }
+      textAlign(0);
     } 
     catch(Exception e) {
       println();
@@ -241,11 +262,7 @@ void draw() {
   }
 }
 
-void keyReleased() {
-  if (Phase == -2) {
-    TutorialKey();
-  }
-}
+
 
 
 void drawScore() {
@@ -262,14 +279,42 @@ void createEnemies(int ROW, int COLUMN) {
   }
 }
 
+void createEnemies2(int ROW, int COLUMN) {
+  for (int i = 0; i < ROW; i++) {
+    for (int j = 0; j <= COLUMN; j++) {
+      enemies.add(new Enemy2(i*gridsize, j*gridsize + 70));
+    }
+  }
+}
+
+
+ void keyPressed()
+{
+  
+   if (Phase == 2 || Phase == -2) {
+    if (key == 'p')
+     run = !run; 
+   }
+   
+   player.controls(key,keyCode,true);
+   
+   
+} 
+void keyReleased(){
+player.controls(key,keyCode,false);
+  if (Phase == -2) {
+    TutorialKey();
+  }
+}
+
 
 
 void saveScore() {
   try {
-    deku = scoreBord.getRowCount();
-    scoreBord.setString(deku, 0, "AlbertGaming");
-    scoreBord.setString(deku, 1, ""+score);
-    scoreBord.setString(deku, 2, hour() + ":" + minute() + " " + day() + "/" + month()+ " ");
+    sblimit = scoreBord.getRowCount();
+    scoreBord.setString(sblimit, 0, "AlbertGaming");
+    scoreBord.setString(sblimit, 1, ""+score);
+    scoreBord.setString(sblimit, 2, hour() + ":" + minute() + " " + day() + "/" + month()+ " ");
     saveTable(scoreBord, "data/sb.csv");
   }
   catch(Exception e) {
@@ -293,18 +338,26 @@ void mousePressed() {
     break;
   case -2:
     //kode
-    TutorialMouse();
+    if (!run) {
+    if (overRec(50, 500, OFFSizeW, OFFSizeH)) { 
+        reset();
+        createEnemies(5,2);
+        Phase = 1;
+        run = true;
+      }
+    if (overRec(500, 500, OFFSizeW, OFFSizeH)) { 
+       run = true;
+      }
+    }
     break;
   case -1:
     //kode
     if (overRec(520, 260, OFFSizeW, OFFSizeH)) { 
       Phase = -2;
-      enemies.clear();
-      createEnemies(1, 0);
+      reset();
       score = 0;
-      player.life = 3;
-      player.x = width/gridsize/2;
-      player.y = height - (10 * pixelsize);
+      createEnemies(1, 0);
+      
     }
     if (overRec(50, 50, 25, 25)) { 
       Phase = 1;
@@ -319,14 +372,10 @@ void mousePressed() {
   case 1:
     //kode
     if (overRec(500, 200, OFFSizeW, OFFSizeH)) { 
+      reset();
       gameStart = true;
-      player.x = width/gridsize/2;
-      player.y = height - (10 * pixelsize);
-      player.life = 3;
-      score = 0;
-      round = 1;
-      enemies.clear();
       createEnemies(5, 2);
+      score = 0;
     }
     if (overRec(500, 250, OFFSizeW, OFFSizeH)) { 
       Phase = -1;
@@ -337,6 +386,17 @@ void mousePressed() {
     break;  
   case 2:
     //kode
+    if (!run) {
+    if (overRec(50, 500, OFFSizeW, OFFSizeH)) { 
+        reset();
+        createEnemies(5,2);
+        Phase = 1;
+        run = true;
+      }
+    if (overRec(500, 500, OFFSizeW, OFFSizeH)) { 
+       run = true;
+      }
+    }
     break;
   case 3:
     //kode
@@ -345,6 +405,10 @@ void mousePressed() {
     }
     break;
   }
+}
+
+void mouseReleased(){
+skipText=true;
 }
 
 boolean overRec(float x, float y, float w, float h) {
@@ -398,9 +462,13 @@ void typeWrite(String msg, int x, int y) {
   textAlign(LEFT);
 }
 
-void help(String hints, int numb) {
+void help(String hints) {
   imageMode(CENTER);
   textAlign(LEFT);
+  if(skipText){
+    TutorialMouse(hints.length()*5);
+  }
+      skipText=false;
 
   image(Tab, TabPOS.x, TabPOS.y, 400, 100);
   transmission.display(TabPOS.x-150, TabPOS.y);
@@ -413,9 +481,23 @@ void help(String hints, int numb) {
       TabPOS.x -= 10;
     }
   } 
-  if (subcnt > numb) {
+  if (subcnt >= hints.length()*5) {
     transmission.frame = 0;
   }
   imageMode(0);
   textAlign(LEFT);
+}
+
+void reset() {
+  Dialog = 0;
+    subcnt = 0;
+    round = 1;
+    player.life = 3;
+    enemies.clear();
+    bullets.clear();
+    pellets.clear();
+    gameStart = false;
+    TabPOS.x = width+500;
+    player.x = width/gridsize/2;
+    player.y = height - (10 * pixelsize);
 }

@@ -2,6 +2,8 @@ class Player extends SpaceShip {
     boolean canShoot = true;
     int shootdelay = 0;
     int life = 3;
+    boolean left,right;
+    PVector velocity = new PVector();
 
     Player() {
         x = width/gridsize/2;
@@ -17,18 +19,12 @@ class Player extends SpaceShip {
     }
 
     void updateObj(int speed) {
+      
+      x += int(velocity.x) * speed;
         if (keyPressed) {
-          if (key == 'A' || key == 'a') {
-            x -= speed;
-        } 
-        if (key == 'D' || key == 'd') {
-            x += speed;
-        }
-        
-        if ((key == 'W' || key == 'w') && canShoot) {
-            bullets.add(new Bullet(x, y));
-            canShoot = false;
-            shootdelay = 0;
+
+        if (run) {
+
           }
         }
         
@@ -45,17 +41,46 @@ class Player extends SpaceShip {
             
             if (pellet.x > x && pellet.x < x + 7 * pixelsize + 5 && pellet.y > y && pellet.y < y + 5 * pixelsize) {
                 pellets.remove(i);
-                
                 life--;  
-                if (life == 0) {
-                      score += 50;
+                break;
+            }
+            
+        }
+        if (life <= 0) {
+                    
                     //printl
                     return false;
                 }
-                break;
-            }
-        }
-
         return true;
+    }
+    
+    void controls(char key,int keyCode,boolean pressed){
+       velocity.set(0,0);
+    if (key != CODED)
+      switch(key){
+      case'A':
+      case 'a':{
+        left=pressed;
+      }break;
+      
+      case'D':
+      case'd':{
+      right=pressed;
+      }break;
+      case 'w':
+      case'W':{
+      if(pressed && canShoot){
+                 bullets.add(new Bullet(x, y));
+            canShoot = false;
+            shootdelay = 0;
+            }
+      }break;
+   
+   
+        
+      
+      }
+velocity.set((right?1:0)-(left?1:0),0);    
+    
     }
 }

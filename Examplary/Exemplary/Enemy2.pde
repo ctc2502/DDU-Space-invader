@@ -6,24 +6,30 @@ class Enemy2 extends SpaceShip {
   x = xpos;
   y = ypos;
   sprite    = new String[5];
-  sprite[0] = "1011101";
-  sprite[1] = "0101010";
+  sprite[0] = "1111111";
+  sprite[1] = "1111111";
   sprite[2] = "1111111";
-  sprite[3] = "0101010";
-  sprite[4] = "1000001";
+  sprite[3] = "1111111";
+  sprite[4] = "1111111";
   }
   
-  void updateObj(int start, int end) {
-        /*if (x >= start && leftright == false) {
-        x++;
-        } else if (leftright == true) {
-        x--;
+  void updateObj(int speed) {
+        fill(baseColor);
+        if (frameCount%60 <= speed) {
+            x += direction * gridsize*2;
         }
+        
+        if (incy == true) {
+            y += gridsize / 2;
+        }
+       
+        if (y >= 500) {
+          player.life = 0;
+        }
+        //println(y);
+    }
     
-        if (x >= end) {
-        leftright = true;
-        } else if (x == start) {
-        leftright = false;
-        }*/
-      }
+    boolean outside() {
+        return x + (direction*gridsize) < 10 || x + (direction*gridsize) > width - gridsize;
+    }
 }
