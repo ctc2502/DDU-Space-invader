@@ -53,6 +53,7 @@ void setup() {
   size(800, 550);
   player = new Player();
   createEnemies(5, 2);
+  createEnemies2(5, 2);
   for (int o = 1; o < scoreBord.getRowCount(); o++) {
     int scoreV;
     scoreV = Integer.valueOf(scoreBord.getString(o, 1)); 
@@ -282,7 +283,7 @@ void createEnemies(int ROW, int COLUMN) {
 void createEnemies2(int ROW, int COLUMN) {
   for (int i = 0; i < ROW; i++) {
     for (int j = 0; j <= COLUMN; j++) {
-      enemies.add(new Enemy2(i*gridsize, j*gridsize + 70));
+      enemies2.add(new Enemy2(i*gridsize, j*gridsize + 70));
     }
   }
 }
@@ -419,29 +420,6 @@ boolean overRec(float x, float y, float w, float h) {
   }
 }
 
-boolean alive(int x, int y, int life) {
-  for (int i = 0; i < bullets.size(); i++) {
-    Bullet bullet = (Bullet) bullets.get(i);
-
-    if (bullet.x > x && bullet.x < x + 7 * pixelsize + 5 && bullet.y > y && bullet.y < y + 5 * pixelsize) {
-      bullets.remove(i);
-
-      life--;
-
-
-      if (life == 0) {
-        score += 50;
-
-        return false;
-      }
-
-      break;
-    }
-  }
-
-  return true;
-}
-
 void Debug() {
   //Debug
   if (mouseButton == RIGHT) {
@@ -494,6 +472,7 @@ void reset() {
     round = 1;
     player.life = 3;
     enemies.clear();
+    enemies2.clear();
     bullets.clear();
     pellets.clear();
     gameStart = false;

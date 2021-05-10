@@ -1,5 +1,7 @@
 class Enemy extends SpaceShip {
     
+    int hitpoints = 1;
+    
     Enemy(int xpos, int ypos) {
         x = xpos+100;
         y = ypos;
@@ -34,4 +36,24 @@ class Enemy extends SpaceShip {
     boolean outside() {
         return x + (direction*gridsize) < 10 || x + (direction*gridsize) > width - gridsize;
     }
+    
+    boolean alive(int x, int y) {
+  for (int i = 0; i < bullets.size(); i++) {
+    Bullet bullet = (Bullet) bullets.get(i);
+
+    if (bullet.x > x && bullet.x < x + 7 * pixelsize + 5 && bullet.y > y && bullet.y < y + 5 * pixelsize) {
+      bullets.remove(i);
+      hitpoints--;
+      if (hitpoints == 0) {
+        score += 50;
+
+        return false;
+    }
+
+      break;
+    }
+  }
+
+  return true;
+}
 }

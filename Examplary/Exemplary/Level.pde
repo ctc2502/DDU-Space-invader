@@ -35,7 +35,7 @@ image(Background00, 0, 0);
     }
     for (int i = 0; i < enemies.size(); i++) {
       Enemy enemy = (Enemy) enemies.get(i);
-      if (!alive(enemy.x, enemy.y, 1)) {
+      if (!enemy.alive(enemy.x, enemy.y)) {
         enemies.remove(i);
       } else {
         enemy.display(1);
@@ -44,7 +44,7 @@ image(Background00, 0, 0);
     
     for (int i = 0; i < enemies2.size(); i++) {
       Enemy2 enemy2 = (Enemy2) enemies2.get(i);
-      if (!alive(enemy2.x, enemy2.y, 3)) {
+      if (!enemy2.alive(enemy2.x, enemy2.y)) {
         enemies2.remove(i);
       } else {
         enemy2.display(1);
@@ -62,7 +62,7 @@ image(Background00, 0, 0);
     if(enemies.size() == 0 && enemies2.size() == 0){
       round++;
       createEnemies(int(random(1,10)),int(random(0,5)));
-      //createEnemies2(int(random(0,5)),int(random(0,10)));
+      createEnemies2(int(random(0,5)),int(random(0,2)));
     }
     incy = false;
       
@@ -86,7 +86,7 @@ void Pause() {
       
       for (int i = 0; i < enemies.size(); i++) {
       Enemy enemy = (Enemy) enemies.get(i);
-      if (!alive(enemy.x, enemy.y, 1)) {
+      if (!enemy.alive(enemy.x, enemy.y)) {
         enemies.remove(i);
       } else {
         enemy.display(-1);
@@ -94,7 +94,7 @@ void Pause() {
       }
       for (int i = 0; i < enemies2.size(); i++) {
       Enemy2 enemy2 = (Enemy2) enemies2.get(i);
-      if (!alive(enemy2.x, enemy2.y, 3)) {
+      if (!enemy2.alive(enemy2.x, enemy2.y)) {
         enemies2.remove(i);
       } else {
         enemy2.display(-1);

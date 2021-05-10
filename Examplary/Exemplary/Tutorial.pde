@@ -38,7 +38,7 @@ void Tutorial() {
   //println();
   for (int i = 0; i < enemies.size(); i++) {
     Enemy enemy = (Enemy) enemies.get(i);
-    if (!alive(enemy.x, enemy.y, 1)) {
+    if (!enemy.alive(enemy.x, enemy.y)) {
       enemies.remove(i);
     } else {
       enemy.display(1);

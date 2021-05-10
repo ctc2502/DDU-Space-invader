@@ -37,7 +37,7 @@ class Player extends SpaceShip {
     
     boolean hp() {
         for (int i = 0; i < pellets.size(); i++) {
-            Pellet pellet = (Pellet) pellets.get(i);
+            Pellet pellet = (Pellet) pellets.get(i);  
             
             if (pellet.x > x && pellet.x < x + 7 * pixelsize + 5 && pellet.y > y && pellet.y < y + 5 * pixelsize) {
                 pellets.remove(i);
