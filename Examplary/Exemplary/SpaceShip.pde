@@ -21,7 +21,6 @@ class SpaceShip {
                   strokeWeight(0);
                   noStroke();
                   rect(xpos+(j * pixelsize), ypos+(i * pixelsize), pixelsize, pixelsize);  
-                  //image(SpaceShip, xpos+(j * pixelsize), ypos+(i * pixelsize), pixelsize, pixelsize);
                 }
             }
         }
@@ -29,5 +28,6 @@ class SpaceShip {
     }
 
     void updateObj(int speed) {
+      
     }
 }

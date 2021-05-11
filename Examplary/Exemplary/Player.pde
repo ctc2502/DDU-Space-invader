@@ -4,6 +4,8 @@ class Player extends SpaceShip {
     int life = 3;
     boolean left,right;
     PVector velocity = new PVector();
+    boolean powerup = false;
+    int cooldown;
 
     Player() {
         x = width/gridsize/2;
@@ -19,20 +21,31 @@ class Player extends SpaceShip {
     }
 
     void updateObj(int speed) {
-      
-      x += int(velocity.x) * speed;
-        if (keyPressed) {
-
-        if (run) {
-
-          }
-        }
         
         shootdelay++;
         
+        if (!powerup) {
+          x += int(velocity.x) * speed;
         if (shootdelay >= 20) {
             canShoot = true;
+          }
+        } else {
+          x += int(velocity.x) * speed*2;
+          if (shootdelay >= 5) {
+            canShoot = true;
+          }
         }
+        
+        if (powerup) {
+          if (cooldown < 1000) {
+           cooldown++;
+          } else {
+           cooldown = 0;
+           powerup = false;
+          }
+        }
+        
+        println(powerup);
     }
     
     boolean hp() {

@@ -37,7 +37,7 @@ class Enemy extends SpaceShip {
         return x + (direction*gridsize) < 10 || x + (direction*gridsize) > width - gridsize;
     }
     
-    boolean alive(int x, int y) {
+    boolean alive() {
   for (int i = 0; i < bullets.size(); i++) {
     Bullet bullet = (Bullet) bullets.get(i);
 
@@ -55,5 +55,5 @@ class Enemy extends SpaceShip {
   }
 
   return true;
-}
+  }
 }

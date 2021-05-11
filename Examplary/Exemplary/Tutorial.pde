@@ -38,7 +38,7 @@ void Tutorial() {
   //println();
   for (int i = 0; i < enemies.size(); i++) {
     Enemy enemy = (Enemy) enemies.get(i);
-    if (!enemy.alive(enemy.x, enemy.y)) {
+    if (!enemy.alive()) {
       enemies.remove(i);
     } else {
       enemy.display(1);
@@ -51,29 +51,29 @@ void Tutorial() {
   default:
     help("Starpilot Fox Mccloud,\nReporting for duty");
     spd = 0;
-    bullets.clear();
+    player.canShoot = false;
     break;
   case 1:
     help("I'll learn you the basic\nprinciples of flyng");
     spd = 0;
-    bullets.clear();
+     player.canShoot = false;
     break;
   case 2:
     help("Press 'A' and 'D',\nto move left and right");
     spd = 10;
-    bullets.clear();
+     player.canShoot = false;
     break;
   case 3:
     help("Nice moves pilot!");
-    bullets.clear();
+     player.canShoot = false;
     break;
   case 4:
     help("You do not only have to\noutmaneuver your enemies");
-    bullets.clear();
+     player.canShoot = false;
     break;
   case 5:
     help("But you also have to\nreturn back the fire");
-    bullets.clear();
+     player.canShoot = false;
     break;
   case 6:
     help("Press 'W' to fire bullets\nat your adversaries");

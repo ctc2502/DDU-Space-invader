@@ -6,13 +6,13 @@ class Enemy2 extends SpaceShip {
   
   Enemy2(int xpos, int ypos) {
   x = xpos;
-  y = ypos+150;
+  y = ypos-100;
   sprite    = new String[5];
   sprite[0] = "0011100";
   sprite[1] = "0111110";
   sprite[2] = "1101011";
   sprite[3] = "1111111";
-  sprite[4] = "1110111";
+  sprite[4] = "0101010";
   baseColor = color(200, 86, 150);
   }
   
@@ -22,8 +22,8 @@ class Enemy2 extends SpaceShip {
             x += direction * gridsize;
         }
         
-        if (incy == true) {
-            y += gridsize;
+        if (frameCount%30 <= speed) {
+            y += 5;
         }
        
         if (y >= 500) {
@@ -35,7 +35,7 @@ class Enemy2 extends SpaceShip {
     boolean outside() {
         return x + (direction*gridsize) < 10 || x + (direction*gridsize) > width - gridsize;
     }
-   boolean alive(int x, int y) {
+   boolean alive() {
   for (int i = 0; i < bullets.size(); i++) {
     Bullet bullet = (Bullet) bullets.get(i);
 
@@ -44,7 +44,7 @@ class Enemy2 extends SpaceShip {
       hitpoints--;
       if (hitpoints == 0) {
         score += 50;
-
+   
         return false;
     }
 
@@ -53,5 +53,5 @@ class Enemy2 extends SpaceShip {
   }
 
   return true;
-}
+  }
 }

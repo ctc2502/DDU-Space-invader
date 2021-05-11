@@ -1,8 +1,10 @@
 int pixelsize = 4;
 int gridsize  = pixelsize * 7 + 5;
 Player player;
+Barrier[] barrier = new Barrier[4];
 ArrayList enemies = new ArrayList();
 ArrayList enemies2 = new ArrayList();
+ArrayList enemies3 = new ArrayList();
 ArrayList bullets = new ArrayList();
 ArrayList pellets = new ArrayList();
 int direction = 1;
@@ -16,7 +18,8 @@ PImage[] whiteFade = new PImage[10];
 PImage SpaceShip, Background00;
 int round = 1;
 int subcnt;
-PImage Play01, Play02, Quit01, Quit02, Start01, Start02, Help01, Help02, Title, Tutor01, Tutor02, Tab, A01, A02, D01, D02, W01, W02, Menu01, Menu02, Resum01, Resum02, Back;
+PImage Play01, Play02, Quit01, Quit02, Start01, Start02, Help01, Help02, Title;     
+PImage Tutor01, Tutor02, Tab, A01, A02, D01, D02, W01, W02, Menu01, Menu02, Resum01, Resum02, Back;
 int sblimit;
 
 PVector Button00 = new PVector(500, 400);
@@ -52,8 +55,11 @@ void setup() {
   noStroke();
   size(800, 550);
   player = new Player();
+  for  (int i = 0; i < barrier.length; i++) {
+  barrier[i] = new Barrier(i*200+50);
+  }
   createEnemies(5, 2);
-  createEnemies2(5, 2);
+  //createEnemies2(5, 2);
   for (int o = 1; o < scoreBord.getRowCount(); o++) {
     int scoreV;
     scoreV = Integer.valueOf(scoreBord.getString(o, 1)); 
@@ -473,10 +479,14 @@ void reset() {
     player.life = 3;
     enemies.clear();
     enemies2.clear();
+    enemies3.clear();
     bullets.clear();
     pellets.clear();
     gameStart = false;
     TabPOS.x = width+500;
     player.x = width/gridsize/2;
     player.y = height - (10 * pixelsize);
+    for  (int i = 0; i < barrier.length; i++) {
+      barrier[i].life = 3;
+    }
 }

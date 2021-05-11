@@ -15,6 +15,12 @@ image(Background00, 0, 0);
     saveScore();
     gameStart = false;
     }
+    
+    for  (int i = 0; i < barrier.length; i++) {
+      if (barrier[i].hp()) {
+      barrier[i].display(0);
+      } 
+    }
 
     for (int i = 0; i < bullets.size(); i++) {
       Bullet bullet = (Bullet) bullets.get(i);
@@ -35,7 +41,7 @@ image(Background00, 0, 0);
     }
     for (int i = 0; i < enemies.size(); i++) {
       Enemy enemy = (Enemy) enemies.get(i);
-      if (!enemy.alive(enemy.x, enemy.y)) {
+      if (!enemy.alive()) {
         enemies.remove(i);
       } else {
         enemy.display(1);
@@ -44,7 +50,7 @@ image(Background00, 0, 0);
     
     for (int i = 0; i < enemies2.size(); i++) {
       Enemy2 enemy2 = (Enemy2) enemies2.get(i);
-      if (!enemy2.alive(enemy2.x, enemy2.y)) {
+      if (!enemy2.alive()) {
         enemies2.remove(i);
       } else {
         enemy2.display(1);
@@ -54,9 +60,21 @@ image(Background00, 0, 0);
       Enemy2 enemy2 = (Enemy2) enemies2.get(i);
       if (enemy2.outside() == true) {
         direction *= (-1);
-        incy = true;
         break;
       }
+    }
+    
+    for (int i = 0; i < enemies3.size(); i++) {
+      Enemy3 enemy3 = (Enemy3) enemies3.get(i);
+      if (!enemy3.alive()) {
+        enemies3.remove(i);
+      } else {
+        enemy3.display(1);
+      }
+    }
+    
+    if (random(0, 1000) < 1) {
+    enemies3.add(new Enemy3(gridsize, gridsize + 70));
     }
     
     if(enemies.size() == 0 && enemies2.size() == 0){
@@ -86,7 +104,7 @@ void Pause() {
       
       for (int i = 0; i < enemies.size(); i++) {
       Enemy enemy = (Enemy) enemies.get(i);
-      if (!enemy.alive(enemy.x, enemy.y)) {
+      if (!enemy.alive()) {
         enemies.remove(i);
       } else {
         enemy.display(-1);
@@ -94,10 +112,19 @@ void Pause() {
       }
       for (int i = 0; i < enemies2.size(); i++) {
       Enemy2 enemy2 = (Enemy2) enemies2.get(i);
-      if (!enemy2.alive(enemy2.x, enemy2.y)) {
+      if (!enemy2.alive()) {
         enemies2.remove(i);
       } else {
         enemy2.display(-1);
+        }
+      }
+      
+      for (int i = 0; i < enemies3.size(); i++) {
+      Enemy3 enemy3 = (Enemy3) enemies3.get(i);
+      if (!enemy3.alive()) {
+        enemies3.remove(i);
+      } else {
+        enemy3.display(-1);
         }
       }
       
