@@ -79,6 +79,7 @@ void Tutorial() {
   case 6:
     help("Press 'W' to fire bullets\nat your adversaries");
     if (score == 50) {
+      niceJob.play();
       subcnt = 0;
       Dialog = 7;
     }
@@ -149,6 +150,7 @@ void TutorialKey() {
       } else if (key == 'D' || key == 'd') {
         subcnt=0;
         Dialog++;
+        niceJob.play();
       }
     }
     break;

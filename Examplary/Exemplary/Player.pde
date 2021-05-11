@@ -84,7 +84,8 @@ class Player extends SpaceShip {
       case 'w':
       case'W':{
       if(pressed && canShoot){
-                 bullets.add(new Bullet(x, y));
+            pew.play();
+            bullets.add(new Bullet(x, y));
             canShoot = false;
             shootdelay = 0;
             }
