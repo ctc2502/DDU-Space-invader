@@ -45,10 +45,12 @@ class Enemy3 extends SpaceShip {
        for  (int H = 0; H < barrier.length; H++) {
         barrier[H].life = 3;
         }
+        armorUp.play();
         println("DEFENSE UP");
        } else if (random == 1){
         player.life++;
         println("EXTRA LIFE");
+        lifeUp.play();
        } else if (random == 0){
         player.powerup = true;
         println("SPEED");

@@ -1,3 +1,6 @@
+import processing.sound.*;
+SoundFile click, armorUp, lifeUp, mainTheme, tutorTheme;
+
 int pixelsize = 4;
 int gridsize  = pixelsize * 7 + 5;
 Player player;
@@ -65,6 +68,13 @@ void setup() {
     scoreV = Integer.valueOf(scoreBord.getString(o, 1)); 
     listScores[o-1] = scoreV;
   }
+  
+  armorUp = new SoundFile(this, "ArmorUp.mp3", false);
+  click = new SoundFile(this, "Click.mp3", false);
+  mainTheme = new SoundFile(this, "MainTheme.wav", false);
+  lifeUp = new SoundFile(this, "LifeUp.mp3", false);
+  tutorTheme = new SoundFile(this, "TutorialTheme.wav", false);
+  mainTheme.loop();
   
   /*
    menuImg = new PImage[21];
@@ -150,6 +160,7 @@ void setup() {
 void draw() {
 
   background(0);
+  println(mainTheme.frames());
 
   switch(Phase) {
   case -6:
@@ -209,6 +220,7 @@ void draw() {
   default:
     //kode
     //println(sortScores);
+    
     background(255);
     frameRate(15);
     menu00.display(-150, 0);
@@ -247,7 +259,7 @@ void draw() {
       text("Your score:\n" + score, 600, 150);
       for (int o = 95; o <= sortScores.length; o++) {
           int scoreV = sortScores[o];
-          println(scoreV);
+          //println(scoreV);
           textAlign(CENTER);
           text(scoreBord.getString(100-o, 0) + " " + scoreV + " " + scoreBord.getString(100-o, 2), 275, (100-o)*50+100);
       }
@@ -296,7 +308,7 @@ void createEnemies2(int ROW, int COLUMN) {
 {
   
    if (Phase == 2 || Phase == -2) {
-    if (key == 'p')
+    if (key == 'p' || key == 'P')
      run = !run; 
    }
    
@@ -345,11 +357,14 @@ void mousePressed() {
     if (!run) {
     if (overRec(50, 500, OFFSizeW, OFFSizeH)) { 
         reset();
+        mainTheme.play();
+        click.play();
         createEnemies(5,2);
         Phase = 1;
         run = true;
       }
     if (overRec(500, 500, OFFSizeW, OFFSizeH)) { 
+       click.play();
        run = true;
       }
     }
@@ -357,6 +372,9 @@ void mousePressed() {
   case -1:
     //kode
     if (overRec(520, 260, OFFSizeW, OFFSizeH)) { 
+      click.play();
+      mainTheme.pause();
+      tutorTheme.loop();
       Phase = -2;
       reset();
       score = 0;
@@ -364,27 +382,33 @@ void mousePressed() {
       
     }
     if (overRec(50, 50, 25, 25)) { 
+      click.play();
       Phase = 1;
     }
     break;
   default:
     //kode
     if (overRec(500, 400, OFFSizeW, OFFSizeH)) { 
+        click.play();
       Phase = 1;
     }
     break;  
   case 1:
     //kode
     if (overRec(500, 200, OFFSizeW, OFFSizeH)) { 
+       click.play();
+       mainTheme.pause();
       reset();
       gameStart = true;
       createEnemies(5, 2);
       score = 0;
     }
     if (overRec(500, 250, OFFSizeW, OFFSizeH)) { 
+      click.play();
       Phase = -1;
     }
     if (overRec(500, 300, OFFSizeW, OFFSizeH)) { 
+        click.play();
       exit();
     }
     break;  
@@ -392,12 +416,15 @@ void mousePressed() {
     //kode
     if (!run) {
     if (overRec(50, 500, OFFSizeW, OFFSizeH)) { 
+        click.play();
+        mainTheme.play();
         reset();
         createEnemies(5,2);
         Phase = 1;
         run = true;
       }
     if (overRec(500, 500, OFFSizeW, OFFSizeH)) { 
+        click.play();
        run = true;
       }
     }
@@ -405,6 +432,8 @@ void mousePressed() {
   case 3:
     //kode
     if (overRec(50, 50, 25, 25)) { 
+        click.play();
+        mainTheme.play();
       Phase = 1;
     }
     break;
@@ -483,6 +512,8 @@ void reset() {
     TabPOS.x = width+500;
     player.x = width/gridsize/2;
     player.y = height - (10 * pixelsize);
+    player.cooldown = 0;
+    player.powerup = false;
     for  (int i = 0; i < barrier.length; i++) {
       barrier[i].life = 3;
     }
@@ -495,6 +526,4 @@ void header(String titel, int titelposX, int titelposY) {
       text(titel, titelposX, titelposY);
       textAlign(0);
       textSize(20);
-      player.cooldown = 0;
-      player.powerup = false;
 }

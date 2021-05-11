@@ -13,8 +13,9 @@ void Tutorial() {
   } else {
     reset();
     createEnemies(1,0);
-    Phase = 0;
+    Phase = 1;
     gameStart = false;
+    tutorTheme.pause();
   }
   
   for (int i = 0; i < bullets.size(); i++) {
@@ -123,6 +124,8 @@ void TutorialMouse(int size) {
   subcnt =1000;
   } else {
     reset();
+    tutorTheme.pause();
+    mainTheme.play();
     createEnemies(1,0);
     Phase = 1;
     break;
