@@ -31,6 +31,7 @@ class Player extends SpaceShip {
           }
         } else {
           x += int(velocity.x) * speed*2;
+          header("MOBILITY RUSH++", width/2, 100);
           if (shootdelay >= 5) {
             canShoot = true;
           }

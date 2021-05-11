@@ -242,11 +242,8 @@ void draw() {
     image(Tab, width/2-Tab.width/2, height/2-Tab.height/2);
     
     try {
-      fill(255);
-      textAlign(CENTER);
-      textSize(50);
-      text("SCOREBOARD", width/2, 100);
-      textSize(20);
+      
+      header("SCOREBOARD", width/2, 100);
       text("Your score:\n" + score, 600, 150);
       for (int o = 95; o <= sortScores.length; o++) {
           int scoreV = sortScores[o];
@@ -489,4 +486,15 @@ void reset() {
     for  (int i = 0; i < barrier.length; i++) {
       barrier[i].life = 3;
     }
+}
+
+void header(String titel, int titelposX, int titelposY) {
+  textSize(50);
+      fill(255);
+      textAlign(CENTER);
+      text(titel, titelposX, titelposY);
+      textAlign(0);
+      textSize(20);
+      player.cooldown = 0;
+      player.powerup = false;
 }

@@ -128,12 +128,8 @@ void Pause() {
         }
       }
       
-      textSize(50);
-      fill(255);
-      textAlign(CENTER);
-      text("PAUSED", width/2, height/2);
-      textAlign(0);
-      textSize(20);
+      header("PAUSED", width/2, height/2);
+      
       if (overRec(500, 500, OFFSizeW, OFFSizeH)) { 
       image(Resum02, 500-15, 500-15);
     } else {
