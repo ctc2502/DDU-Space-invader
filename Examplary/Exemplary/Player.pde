@@ -63,6 +63,7 @@ class Player extends SpaceShip {
         if (life <= 0) {
                     
                     //printl
+                    gameOver.play();
                     return false;
                 }
         return true;

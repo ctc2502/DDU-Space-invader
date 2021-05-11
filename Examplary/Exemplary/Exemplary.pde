@@ -1,5 +1,5 @@
 import processing.sound.*;
-SoundFile click, armorUp, lifeUp, pew, niceJob, mainTheme, tutorTheme;
+SoundFile click, armorUp, lifeUp, pew, niceJob, hit, dead, gameOver, mainTheme, tutorTheme;
 
 int pixelsize = 4;
 int gridsize  = pixelsize * 7 + 5;
@@ -75,7 +75,10 @@ void setup() {
   lifeUp = new SoundFile(this, "LifeUp.mp3", false);
   tutorTheme = new SoundFile(this, "TutorialTheme.wav", false);
   pew = new SoundFile(this, "Pew2.mp3", false);
-  //niceJob = new SoundFile(this, "GoodJob.mp3", true);
+  niceJob = new SoundFile(this, "NiceJob.mp3", false);
+  hit = new SoundFile(this, "Hit.mp3", false);
+  dead = new SoundFile(this, "Dead.mp3", false);
+  gameOver = new SoundFile(this, "GameOver.mp3", false);
   mainTheme.loop();
   
   /*
