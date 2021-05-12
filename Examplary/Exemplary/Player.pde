@@ -25,7 +25,7 @@ class Player extends SpaceShip {
         
         shootdelay++;
         
-        if (!powerup) {
+        if (!powerup) {    
           x += int(velocity.x) * speed;
         if (shootdelay >= 20) {
             canShoot = true;
@@ -77,12 +77,16 @@ class Player extends SpaceShip {
       switch(key){
       case'A':
       case 'a':{
+        //if (x > width) { 
         left=pressed;
+        //}
       }break;
       
       case'D':
       case'd':{
+      //if (x > 0) {
       right=pressed;
+        //}
       }break;
       case 'w':
       case'W':{

@@ -82,6 +82,8 @@ void setup() {
   gameTheme = new SoundFile(this, "GameTheme.wav", false);
   speedUp = new SoundFile(this, "PowerUp.wav", false);
   gameTheme.amp(0.5);
+  mainTheme.amp(0.5);
+  tutorTheme.amp(0.5);
   mainTheme.loop();
   
   /*
@@ -168,7 +170,7 @@ void setup() {
 void draw() {
 
   background(0);
-  println(mainTheme.frames());
+  //println(mainTheme.frames());
 
   switch(Phase) {
   case -6:
@@ -370,7 +372,7 @@ void mousePressed() {
         createEnemies(5,2);
         Phase = 1;
         run = true;
-        gameTheme.pause();
+        tutorTheme.pause();
       }
     if (overRec(500, 500, OFFSizeW, OFFSizeH)) { 
        click.play();
