@@ -46,7 +46,12 @@ class Enemy extends SpaceShip {
       hitpoints--;
       if (hitpoints == 0) {
         score += 50;
-        dead.play();
+        if (dead.isPlaying()) {
+            dead.stop();
+            dead.play();
+            } else {
+            dead.play();
+            }
         return false;
     }
 

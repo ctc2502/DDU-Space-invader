@@ -1,5 +1,5 @@
 import processing.sound.*;
-SoundFile click, armorUp, lifeUp, pew, niceJob, hit, dead, gameOver, mainTheme, tutorTheme;
+SoundFile click, armorUp, lifeUp, pew, niceJob, hit, dead, gameOver, speech, mainTheme, tutorTheme, gameTheme;
 
 int pixelsize = 4;
 int gridsize  = pixelsize * 7 + 5;
@@ -76,9 +76,10 @@ void setup() {
   tutorTheme = new SoundFile(this, "TutorialTheme.wav", false);
   pew = new SoundFile(this, "Pew2.mp3", false);
   niceJob = new SoundFile(this, "NiceJob.mp3", false);
-  hit = new SoundFile(this, "Hit.mp3", false);
+  hit = new SoundFile(this, "Hit.wav", false);
   dead = new SoundFile(this, "Dead.mp3", false);
   gameOver = new SoundFile(this, "GameOver.mp3", false);
+  gameTheme = new SoundFile(this, "GameTheme.wav", false);
   mainTheme.loop();
   
   /*
@@ -367,6 +368,7 @@ void mousePressed() {
         createEnemies(5,2);
         Phase = 1;
         run = true;
+        gameTheme.pause();
       }
     if (overRec(500, 500, OFFSizeW, OFFSizeH)) { 
        click.play();
@@ -403,6 +405,7 @@ void mousePressed() {
     if (overRec(500, 200, OFFSizeW, OFFSizeH)) { 
        click.play();
        mainTheme.pause();
+       gameTheme.loop();
       reset();
       gameStart = true;
       createEnemies(5, 2);
@@ -427,6 +430,7 @@ void mousePressed() {
         createEnemies(5,2);
         Phase = 1;
         run = true;
+        gameTheme.pause();
       }
     if (overRec(500, 500, OFFSizeW, OFFSizeH)) { 
         click.play();

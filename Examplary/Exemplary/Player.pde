@@ -63,6 +63,7 @@ class Player extends SpaceShip {
         if (life <= 0) {
                     
                     //printl
+                    gameTheme.pause();
                     gameOver.play();
                     return false;
                 }
@@ -85,7 +86,12 @@ class Player extends SpaceShip {
       case 'w':
       case'W':{
       if(pressed && canShoot){
+            if (pew.isPlaying()) {
+            pew.stop();
             pew.play();
+            } else {
+            pew.play();
+            }
             bullets.add(new Bullet(x, y));
             canShoot = false;
             shootdelay = 0;

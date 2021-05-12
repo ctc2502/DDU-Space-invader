@@ -116,7 +116,7 @@ void TutorialMouse(int size) {
   }}
     break;
   case 6:{
-    if(size >subcnt){
+    if(size > subcnt){
   subcnt =1000;
   }}
     break;

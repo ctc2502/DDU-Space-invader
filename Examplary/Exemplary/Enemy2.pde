@@ -42,10 +42,20 @@ class Enemy2 extends SpaceShip {
     if (bullet.x > x && bullet.x < x + 7 * pixelsize + 5 && bullet.y > y && bullet.y < y + 5 * pixelsize) {
       bullets.remove(i);
       hitpoints--;
-      hit.play();
+      if (hit.isPlaying()) {
+            hit.stop();
+            hit.play();
+            } else {
+            hit.play();
+            }
       if (hitpoints == 0) {
         score += 50;
-        dead.play();
+        if (dead.isPlaying()) {
+            dead.stop();
+            dead.play();
+            } else {
+            dead.play();
+            }
         return false;
     }
 
