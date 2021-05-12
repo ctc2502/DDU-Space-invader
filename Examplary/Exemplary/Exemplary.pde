@@ -1,5 +1,5 @@
 import processing.sound.*;
-SoundFile click, armorUp, lifeUp, pew, niceJob, hit, dead, gameOver, speech, mainTheme, tutorTheme, gameTheme;
+SoundFile click, armorUp, lifeUp, pew, niceJob, hit, dead, gameOver, speedUp, mainTheme, tutorTheme, gameTheme;
 
 int pixelsize = 4;
 int gridsize  = pixelsize * 7 + 5;
@@ -80,6 +80,8 @@ void setup() {
   dead = new SoundFile(this, "Dead.mp3", false);
   gameOver = new SoundFile(this, "GameOver.mp3", false);
   gameTheme = new SoundFile(this, "GameTheme.wav", false);
+  speedUp = new SoundFile(this, "PowerUp.wav", false);
+  gameTheme.amp(0.5);
   mainTheme.loop();
   
   /*
@@ -267,7 +269,7 @@ void draw() {
           int scoreV = sortScores[o];
           //println(scoreV);
           textAlign(CENTER);
-          text(scoreBord.getString(100-o, 0) + " " + scoreV + " " + scoreBord.getString(100-o, 2), 275, (100-o)*50+100);
+          text(100-o + ". " + scoreV, 300, (100-o)*50+100);
       }
       textAlign(0);
     } 

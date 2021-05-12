@@ -3,6 +3,7 @@ class Player extends SpaceShip {
     int shootdelay = 0;
     int life = 3;
     boolean left,right;
+    boolean shift;
     PVector velocity = new PVector();
     boolean powerup = false;
     int cooldown;

@@ -52,6 +52,7 @@ class Enemy3 extends SpaceShip {
         println("EXTRA LIFE");
         lifeUp.play();
        } else if (random == 0){
+        speedUp.play();
         player.powerup = true;
         println("SPEED");
        }
