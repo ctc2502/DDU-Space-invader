@@ -128,6 +128,12 @@ void Pause() {
         }
       }
       
+      for  (int i = 0; i < barrier.length; i++) {
+      if (barrier[i].hp()) {
+      barrier[i].display(0);
+        } 
+      }
+      
       header("PAUSED", width/2, height/2);
       
       if (overRec(500, 500, OFFSizeW, OFFSizeH)) { 
