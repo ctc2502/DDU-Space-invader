@@ -45,6 +45,12 @@ void Tutorial() {
       enemy.display(1);
     }
   }
+  
+  for  (int i = 0; i < barrier.length; i++) {
+      if (barrier[i].hp()) {
+      barrier[i].display(0);
+      } 
+    }
 
   incy = false;
 

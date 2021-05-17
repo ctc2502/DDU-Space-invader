@@ -13,6 +13,7 @@ image(Background00, 0, 0);
     reset();
     createEnemies(5,2);
     saveScore();
+    loadScore();
     gameStart = false;
     }
     

@@ -25,10 +25,6 @@ class Enemy3 extends SpaceShip {
  
         //println(y);
     }
-
-    boolean outside() {
-        return x + (direction*gridsize) < 10 || x + (direction*gridsize) > width - gridsize;
-    }
     
     boolean alive() {
   for (int i = 0; i < bullets.size(); i++) {

@@ -8,7 +8,7 @@ class SpaceShip {
         updateObj(velo);
         drawSprite(x, y);
     }
-
+  
     void drawSprite(int xpos, int ypos) {
         fill(baseColor);
         

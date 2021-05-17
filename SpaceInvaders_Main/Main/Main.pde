@@ -21,7 +21,7 @@ PImage[] whiteFade = new PImage[10];
 PImage SpaceShip, Background00;
 int round = 1;
 int subcnt;
-PImage Play01, Play02, Quit01, Quit02, Start01, Start02, Help01, Help02, Title;     
+PImage Play01, Play02, Quit01, Quit02, Start01, Start02, Help01, Help02,Score01,Score02, Title;     
 PImage Tutor01, Tutor02, Tab, A01, A02, D01, D02, W01, W02, Menu01, Menu02, Resum01, Resum02, Back;
 int sblimit;
 
@@ -41,14 +41,14 @@ Animation menu01, menu00, transition, transmission, tip1, tip2;
 
 PVector TabPOS = new PVector(width+1000, 200);
 
-int[] listScores = new int[100];
-int[] sortScores = new int[100];
+IntList listScores = new IntList();
 
 boolean run = true; 
 
 void setup() {
   smooth();
   scoreBord = loadTable("data/sb.csv");
+  println(scoreBord);
   boolean loaded = scoreBord == null;
   println("loaded: "+ loaded );
 
@@ -63,11 +63,7 @@ void setup() {
   }
   createEnemies(5, 2);
   //createEnemies2(5, 2);
-  for (int o = 1; o < scoreBord.getRowCount(); o++) {
-    int scoreV;
-    scoreV = Integer.valueOf(scoreBord.getString(o, 1)); 
-    listScores[o-1] = scoreV;
-  }
+loadScore();
   
   armorUp = new SoundFile(this, "ArmorUp.mp3", false);
   click = new SoundFile(this, "Click.mp3", false);
@@ -119,6 +115,12 @@ void setup() {
   Quit01.resize(OFFSizeW, OFFSizeH);
   Quit02 = loadImage("QuitON.png");
   Quit02.resize(ONsizeW, ONsizeH);
+
+  Score01= loadImage("BoardOFF.png");
+  Score01.resize(OFFSizeW,OFFSizeH);
+  Score02= loadImage("BoardON.png");
+  Score02.resize(ONsizeW,ONsizeH);
+
 
   Tutor01 = loadImage("TutorialOFF.png");
   Tutor01.resize(OFFSizeW, OFFSizeH);
@@ -196,8 +198,8 @@ void draw() {
     stroke(255);
     strokeWeight(3);
     line(470, 105, 470, 440);
-    frameRate(30);
-    tip1.display(50, 200);
+    frameRate(60);
+    tip1.display(50, 200,0.50);
     if (tip1.frame > 14) {
       image(A01, 80, 100);
     } else {   
@@ -208,7 +210,7 @@ void draw() {
     } else {
       image(D02, 180, 100);
     }
-    tip2.display(300, 200);
+    tip2.display(300, 200,0.50);
     if (tip2.frame < 2) {
       image(W01, 370, 100);
     } else {
@@ -232,12 +234,12 @@ void draw() {
     //println(sortScores);
     
     background(255);
-    frameRate(15);
-    menu00.display(-150, 0);
+    frameRate(60);
+    menu00.display(-150, 0,0.25);
 
     if (overRec(500, 400, OFFSizeW, OFFSizeH)) { 
-      frameRate(30);
-      menu01.display(-150, 0);
+      frameRate(60);
+      menu01.display(-150, 0,0.5);
       image(Start02, 500-15, 400-15);
     } else {
       image(Start01, 500, 400);
@@ -259,7 +261,7 @@ void draw() {
   case 3:
     //kode
     //println(scoreBord.getRowCount());
-    sortScores = sort(listScores);
+    listScores.sortReverse();
     image(Background00, 0, 0);
     image(Tab, width/2-Tab.width/2, height/2-Tab.height/2);
     
@@ -267,11 +269,11 @@ void draw() {
       
       header("SCOREBOARD", width/2, 100);
       text("Your score:\n" + score, 600, 150);
-      for (int o = 95; o <= sortScores.length; o++) {
-          int scoreV = sortScores[o];
+      for (int o = 0; o < 5; o++) {
+          int scoreV = listScores.get(o);
           //println(scoreV);
           textAlign(CENTER);
-          text(100-o + ". " + scoreV, 300, (100-o)*50+100);
+          text(o+1+ ". " + scoreV, 300, o*50+150);
       }
       textAlign(0);
     } 
@@ -419,7 +421,13 @@ void mousePressed() {
       click.play();
       Phase = -1;
     }
-    if (overRec(500, 300, OFFSizeW, OFFSizeH)) { 
+    
+        if (overRec(500, 300, OFFSizeW, OFFSizeH)) { 
+        click.play();
+        Phase = 3;
+        
+    }
+    if (overRec(500, 350, OFFSizeW, OFFSizeH)) { 
         click.play();
       exit();
     }
@@ -494,7 +502,7 @@ void help(String hints) {
       skipText=false;
 
   image(Tab, TabPOS.x, TabPOS.y, 400, 100);
-  transmission.display(TabPOS.x-150, TabPOS.y);
+  transmission.display(TabPOS.x-150, TabPOS.y,1);
   fill(#03C04A);
   text("Fox Mccloud:", (int)TabPOS.x-95, (int)TabPOS.y-20);
   fill(255);
@@ -530,6 +538,15 @@ void reset() {
     for  (int i = 0; i < barrier.length; i++) {
       barrier[i].life = 3;
     }
+}
+
+void loadScore(){
+  for (int o = 1; o < scoreBord.getRowCount(); o++) {
+    int scoreV;
+    println(scoreBord.getInt(o, 1));
+    scoreV = scoreBord.getInt(o, 1); 
+    listScores.set(o-1,scoreV);
+  }
 }
 
 void header(String titel, int titelposX, int titelposY) {

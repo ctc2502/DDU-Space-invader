@@ -23,7 +23,7 @@ class Player extends SpaceShip {
 
     void updateObj(int speed) {
         
-        shootdelay++;
+        shootdelay++;  
         
         if (!powerup) {    
           x += int(velocity.x) * speed;
